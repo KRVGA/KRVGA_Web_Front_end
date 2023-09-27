@@ -5,7 +5,7 @@ const Hero = () => {
     <section id='hero'>
       <div className='max-w-6xl mx-auto text-center mb-40 px-10 pt-16'>
         <img
-          className='rounded overflow-hidden shadow-xl dark:shadow-gray-300  mx-auto my-16 '
+          className='rounded overflow-hidden shadow-xl dark:shadow-gray-300  mx-auto mb-16 mt-2 '
           src={IMAGES.frontHero}
           alt='Logo'
         />

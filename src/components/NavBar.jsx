@@ -59,13 +59,13 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
         </button>
       </div>
 
-      <div className={` ${isHamburgerOpen ? 'mb-10' : ''} md:hidden`}>
+      <div className={` ${isHamburgerOpen ? 'mb-24' : ''} md:hidden`}>
         <div
           id='menu'
           className={
             isHamburgerOpen
-              ? 'absolute flex flex-col items-center rounded self-end py-4 mt-4 space-y-3 font-bold bg-veryLightGray sm:w-auto sm:self-center left-6 right-6 drop-shadow-md'
-              : 'absolute flex-col items-center self-end rounded hidden py-4 mt-4 space-y-3 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-md'
+              ? 'absolute flex flex-col items-center rounded self-end py-4 mt-4  space-y-3 font-bold bg-veryLightGray sm:w-auto sm:self-center left-6 right-6 drop-shadow-md'
+              : 'absolute flex-col items-center self-end rounded hidden py-4 mt-4  space-y-3 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-md'
           }
         >
           <Link
