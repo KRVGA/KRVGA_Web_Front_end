@@ -20,10 +20,24 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
         <div className='hidden md:flex space-x-8'>
           <Link
             className='hover:text-darkGrayishBlue hover:underline'
+            to='/'
+          >
+            Home
+          </Link>
+          <Link
+            className='hover:text-darkGrayishBlue hover:underline'
             to='/membership_purchase'
           >
             Memberships
           </Link>
+          <a
+            className='hover:text-darkGrayishBlue hover:underline'
+            href='https://membership.nra.org/MultiStep/JoinToday'
+            target='_blank'
+            rel='noreferrer'
+          >
+            Join NRA
+          </a>
           <Link
             className='hover:text-darkGrayishBlue hover:underline'
             to='/register'
@@ -36,14 +50,6 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
           >
             Login
           </Link>
-          <a
-            className='hover:text-darkGrayishBlue hover:underline'
-            href='https://membership.nra.org/MultiStep/JoinToday'
-            target='_blank'
-            rel='noreferrer'
-          >
-            Join NRA
-          </a>
         </div>
 
         <button
