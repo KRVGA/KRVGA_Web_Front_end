@@ -55,26 +55,32 @@ const MemberPurchase = () => {
           </span>
         </div>
       ) : (
-        <div className='flex items-center justify-center min-h-height'>
-          <div className='flex flex-col my-6 space-y-6 md:space-y-0 md:space-x-6 md:flex-row md:my-0'>
-            {membership_types.map((item) => (
-              <div
-                key={item.membership_id}
-                className={`${
-                  membershipSelected.membership_id === item.membership_id
-                    ? 'bg-brightRedLight rounded-xl text-white'
-                    : 'bg-slate-700 rounded-xl text-white'
-                } `}
-              >
-                <div className='p-8 mx-3 my-3 rounded-xl bg-veryDarkBlue'>
-                  <MembershipCard
-                    membership_type={item}
-                    setMembershipSelected={setMembershipSelected}
-                    membershipSelected={membershipSelected}
-                  />
+        <div className='flex flex-col '>
+          <h3 className='block  text-lg font-semibold leading-snug tracking-normal text-inherit antialiased mb-6'>
+            You must be legally entitled to possess and use a firearm and at
+            least 18 years of age on the date you apply.
+          </h3>
+          <div className='flex items-center justify-center min-h-height'>
+            <div className='flex flex-col my-6 space-y-6 md:space-y-0 md:space-x-6 md:flex-row md:my-0'>
+              {membership_types.map((item) => (
+                <div
+                  key={item.membership_id}
+                  className={`${
+                    membershipSelected.membership_id === item.membership_id
+                      ? 'bg-brightRedLight rounded-xl text-white'
+                      : 'bg-slate-700 rounded-xl text-white'
+                  } `}
+                >
+                  <div className='p-8 mx-3 my-3 rounded-xl bg-veryDarkBlue'>
+                    <MembershipCard
+                      membership_type={item}
+                      setMembershipSelected={setMembershipSelected}
+                      membershipSelected={membershipSelected}
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       )}

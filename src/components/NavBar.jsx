@@ -9,7 +9,7 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
 
   return (
     <nav className='relative container mx-auto p-6'>
-      <div className='flex items-center justify-between'>
+      <section className='flex items-center justify-between'>
         <div className='pt-2'>
           <img
             className='h-40 w-40'
@@ -17,7 +17,7 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
             alt='Logo'
           />
         </div>
-        <div className='hidden md:flex space-x-8'>
+        <section className='hidden md:flex space-x-8'>
           <Link
             className='hover:text-darkGrayishBlue hover:underline'
             to='/'
@@ -50,7 +50,7 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
           >
             Login
           </Link>
-        </div>
+        </section>
 
         <button
           onClick={handleClickHamburger}
@@ -63,7 +63,7 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
           <span className='hamburger-middle'></span>
           <span className='hamburger-bottom'></span>
         </button>
-      </div>
+      </section>
 
       <div className={` ${isHamburgerOpen ? 'mb-24' : ''} md:hidden`}>
         <div
@@ -82,16 +82,22 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
           </Link>
           <Link
             className='hover:text-darkGrayishBlue underline'
-            to='/membership_purchase'
+            to='/'
           >
-            Sign-up
+            Home
           </Link>
           <Link
             className='hover:text-darkGrayishBlue underline'
             to='/membership_purchase'
           >
-            Login
+            Sign-up
           </Link>
+          {/* <Link
+            className='hover:text-darkGrayishBlue underline'
+            to='/membership_purchase'
+          >
+            Login
+          </Link> */}
           <a
             className='hover:text-darkGrayishBlue underline'
             href='https://membership.nra.org/MultiStep/JoinToday'

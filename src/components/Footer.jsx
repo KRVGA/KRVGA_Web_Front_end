@@ -31,8 +31,9 @@ const Footer = () => {
                 rel='noreferrer'
                 className='text-brightRed'
               >
-                Cyrus Canyon Rd, Kernville, CA 93238
+                KERN RIVER VALLEY GUN ASSOCIATION
               </a>
+              <p>PO Box 958, Wofford Heights, CA 93285</p>
               <p>(760) 223-5083</p>
             </div>
           </div>
