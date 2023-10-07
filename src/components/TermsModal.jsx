@@ -55,9 +55,8 @@ const TermsModal = (props) => {
 
   return (
     <Modal
-      className='fixed top-0 left-0 right-0 z-50  w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full'
       show={true}
-      //   size='xl'
+      size='xl'
       onClose={props.onClose}
     >
       <Modal.Header>Please Read and Agree</Modal.Header>
@@ -483,8 +482,8 @@ const TermsModal = (props) => {
             !zip ||
             !has_signed_pledge ||
             (nra_member && !nra_member_number)
-              ? 'inline-block px-5 py-3 my-3 text-center border border-brightRedLight rounded-lg opacity-25 cursor-not-allowed'
-              : 'inline-block px-5 py-3 my-3 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
+              ? 'inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg opacity-25 cursor-not-allowed'
+              : 'inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
           }
           onClick={() => {
             props.action(purchaseData);
@@ -494,10 +493,10 @@ const TermsModal = (props) => {
           Proceed
         </button>
         <button
-          className='inline-block px-5 py-3 my-3 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
+          className='inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
           onClick={props.onClose}
         >
-          Go back
+          Back
         </button>
       </Modal.Footer>
     </Modal>
