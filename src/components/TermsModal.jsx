@@ -55,7 +55,7 @@ const TermsModal = (props) => {
 
   return (
     <Modal
-      className=' top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto max-h-full'
+      //   className='relative rounded-lg bg-white shadow dark:bg-gray-700 flex flex-col max-h-[90vh]'
       show={true}
       onClose={props.onClose}
     >
@@ -70,7 +70,7 @@ const TermsModal = (props) => {
             RELEASE AND INDEMNIFICATION AGREEMENT
           </h3>
         </div>
-        <div className='space-y-6 p-6'>
+        <div className='space-y-4 p-2'>
           <p className='text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
             IN CONSIDERATION of my being given permission to observe and/or
             participate in the shooting, sporting and outdoor activities at the
@@ -158,27 +158,6 @@ const TermsModal = (props) => {
             negligence, or injury, no matter who might bring said claim, if any
             be brought.
           </p>
-
-          <div className='flex items-center mb-4'>
-            <input
-              name='has_signed_release'
-              id='has_signed_release'
-              defaultChecked={has_signed_release}
-              onChange={onChange}
-              type='checkbox'
-              className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-            ></input>
-            <label
-              htmlFor='has_signed_release'
-              className='ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-            >
-              <p className='text-xs text-justify leading-relaxed text-gray-800 dark:text-gray-400'>
-                I HAVE READ THE FORGOING RELEASE AND INDEMNIFICATION AGREEMENT,
-                AND BY SIGNING. REPRESENT AND WARRANT THAT I FULLY UNDERSTAND
-                IT. CAUTION! READ BEFORE SIGNING.
-              </p>
-            </label>
-          </div>
           <form>
             <div className='relative z-0 w-full mb-6 group'>
               <input
@@ -295,17 +274,40 @@ const TermsModal = (props) => {
             </div>
 
             <div className='grid md:grid-cols-3 md:gap-2'>
-              {!veteran && !decline && (
+              {
+                <div className='relative z-0 w-full mb-6 group'>
+                  <input
+                    name='veteran'
+                    id='veteran'
+                    disabled={decline}
+                    defaultChecked={veteran}
+                    onChange={onChange}
+                    type='checkbox'
+                    className={
+                      decline
+                        ? 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed'
+                        : 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
+                    }
+                  />
+                  <label
+                    htmlFor='veteran'
+                    className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
+                  >
+                    Veteran
+                  </label>
+                </div>
+              }
+              {veteran && (
                 <div className='relative z-0 w-full mb-6 group'>
                   <input
                     name='disabled_veteran'
                     id='disabled_veteran'
-                    disabled={veteran || decline}
+                    disabled={decline}
                     defaultChecked={disabled_veteran}
                     onChange={onChange}
                     type='checkbox'
                     className={
-                      veteran || decline
+                      decline
                         ? 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed'
                         : 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
                     }
@@ -318,52 +320,28 @@ const TermsModal = (props) => {
                   </label>
                 </div>
               )}
-              {!disabled_veteran && !decline && (
-                <div className='relative z-0 w-full mb-6 group'>
-                  <input
-                    name='veteran'
-                    id='veteran'
-                    disabled={disabled_veteran || decline}
-                    defaultChecked={veteran}
-                    onChange={onChange}
-                    type='checkbox'
-                    className={
-                      disabled_veteran || decline
-                        ? 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed'
-                        : 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
-                    }
-                  />
-                  <label
-                    htmlFor='veteran'
-                    className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
-                  >
-                    Veteran
-                  </label>
-                </div>
-              )}
-              {!veteran && !disabled_veteran && (
-                <div className='relative z-0 w-full mb-6 group'>
-                  <input
-                    name='decline'
-                    id='decline'
-                    disabled={veteran || disabled_veteran}
-                    defaultChecked={decline}
-                    onChange={onChange}
-                    type='checkbox'
-                    className={
-                      veteran || disabled_veteran
-                        ? 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed'
-                        : 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
-                    }
-                  />
-                  <label
-                    htmlFor='decline'
-                    className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
-                  >
-                    Decline to state
-                  </label>
-                </div>
-              )}
+
+              <div className='relative z-0 w-full mb-6 group'>
+                <input
+                  name='decline'
+                  id='decline'
+                  disabled={veteran || disabled_veteran}
+                  defaultChecked={decline}
+                  onChange={onChange}
+                  type='checkbox'
+                  className={
+                    veteran || disabled_veteran
+                      ? 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed'
+                      : 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
+                  }
+                />
+                <label
+                  htmlFor='decline'
+                  className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
+                >
+                  Decline to state
+                </label>
+              </div>
             </div>
             <div className='relative z-0 w-full mb-6 group'>
               <input
@@ -416,11 +394,6 @@ const TermsModal = (props) => {
               )}
             </div>
             <div className=''>
-              <span className='italic text-justify'>
-                To help defend our 2nd amendment rights, the KRVGA encourages
-                its members to join the NRA and CRPA.
-              </span>
-
               <p className='text-base text-justify mt-4 leading-relaxed text-gray-500 dark:text-gray-400'>
                 <span className='text-gray-900'>Pledge:</span> I certify that I
                 am legally entitled to own and use a firearm in compliance with
@@ -440,7 +413,7 @@ const TermsModal = (props) => {
                 all club rules.
               </p>
             </div>
-            <div className='flex flex-col items-center my-4'>
+            <div className='flex  items-center my-4'>
               <input
                 name='has_signed_pledge'
                 id='has_signed_pledge'
@@ -451,9 +424,29 @@ const TermsModal = (props) => {
               />
               <label
                 htmlFor='has_signed_pledge'
-                className='ml-2 text-sm font-medium text-center text-gray-900 dark:text-gray-300'
+                className='ml-2 text-sm font-medium text-justify text-gray-900 dark:text-gray-300'
               >
-                By checking this box you e-sign the pledge above
+                BY CHECKING THIS BOX YOU E-SIGN THE PLEDGE ABOVE
+              </label>
+            </div>
+            <div className='flex items-center mb-4'>
+              <input
+                name='has_signed_release'
+                id='has_signed_release'
+                defaultChecked={has_signed_release}
+                onChange={onChange}
+                type='checkbox'
+                className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+              ></input>
+              <label
+                htmlFor='has_signed_release'
+                className='ml-2 text-sm font-medium text-justify text-gray-900 dark:text-gray-300'
+              >
+                {/* <p className='text-xs text-justify leading-relaxed text-gray-800 dark:text-gray-400'> */}
+                I HAVE READ THE FORGOING RELEASE AND INDEMNIFICATION AGREEMENT,
+                AND BY CHECKING THE BOX. REPRESENT AND WARRANT THAT I FULLY
+                UNDERSTAND IT. <b>CAUTION! READ BEFORE SIGNING.</b>
+                {/* </p> */}
               </label>
             </div>
           </form>
