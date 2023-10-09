@@ -454,7 +454,7 @@ const TermsModal = (props) => {
           </form>
         </div>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer className='p-4 justify-around'>
         <button
           disabled={
             !has_signed_release ||
