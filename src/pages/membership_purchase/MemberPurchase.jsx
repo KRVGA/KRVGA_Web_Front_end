@@ -32,7 +32,6 @@ const MemberPurchase = () => {
   };
 
   return (
-    // max-w-6xl
     <div className=' text-center mb-40 px-10 pt-16 membership-purchase'>
       {isError && showAlert ? (
         <div

@@ -55,7 +55,7 @@ const TermsModal = (props) => {
 
   return (
     <Modal
-      //   className='relative rounded-lg bg-white shadow dark:bg-gray-700 flex flex-col max-h-[90vh]'
+      className='h-screen'
       show={true}
       onClose={props.onClose}
     >
@@ -321,27 +321,29 @@ const TermsModal = (props) => {
                 </div>
               )}
 
-              <div className='relative z-0 w-full mb-6 group'>
-                <input
-                  name='decline'
-                  id='decline'
-                  disabled={veteran || disabled_veteran}
-                  defaultChecked={decline}
-                  onChange={onChange}
-                  type='checkbox'
-                  className={
-                    veteran || disabled_veteran
-                      ? 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed'
-                      : 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
-                  }
-                />
-                <label
-                  htmlFor='decline'
-                  className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
-                >
-                  Decline to state
-                </label>
-              </div>
+              {!veteran && !disabled_veteran && (
+                <div className='relative z-0 w-full mb-6 group'>
+                  <input
+                    name='decline'
+                    id='decline'
+                    disabled={veteran || disabled_veteran}
+                    defaultChecked={decline}
+                    onChange={onChange}
+                    type='checkbox'
+                    className={
+                      veteran || disabled_veteran
+                        ? 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed'
+                        : 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
+                    }
+                  />
+                  <label
+                    htmlFor='decline'
+                    className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
+                  >
+                    Decline to state
+                  </label>
+                </div>
+              )}
             </div>
             <div className='relative z-0 w-full mb-6 group'>
               <input
