@@ -58,8 +58,8 @@ const TermsModal = (props) => {
       show={true}
       onClose={props.onClose}
     >
-      <Modal.Header className='p-2'>Please Read and Agree</Modal.Header>
-      <Modal.Body>
+      <Modal.Header>Please Read and Agree</Modal.Header>
+      <Modal.Body className='modal-body'>
         <div className='text-xs flex flex-col '>
           <span className='italic text-center'>
             Operating on a non-discriminatory basis with a special use permit

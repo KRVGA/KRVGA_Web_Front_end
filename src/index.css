@@ -69,5 +69,9 @@ body {
 }
 
 .membership-purchase {
-  /* height: inherit; */
+  height: inherit;
+}
+
+.modal-body {
+  max-height: 70vh;
 }
