@@ -3,7 +3,7 @@ const dev_url = 'http://localhost:5000/api';
 
 export const fetchMembershipTypes = async () => {
   try {
-    const response = await fetch(`${dev_url}/membership-purchase/types`);
+    const response = await fetch(`${BASE_URL}/membership-purchase/types`);
     const result = await response.json();
 
     return result;
@@ -19,7 +19,7 @@ export const fetchMembershipTypes = async () => {
 
 export const requestPurchaseMembership = async (purchaseData) => {
   try {
-    const response = await fetch(`${dev_url}/stripe/checkout-session`, {
+    const response = await fetch(`${BASE_URL}/stripe/checkout-session`, {
       method: 'POST',
       headers: {'Content-type': 'application/json'},
       body: JSON.stringify(purchaseData),
@@ -39,7 +39,7 @@ export const requestPurchaseMembership = async (purchaseData) => {
 export const requestProcessMembershipPurchase = async (checkout_session_id) => {
   try {
     const response = await fetch(
-      `${dev_url}/membership-purchase/${checkout_session_id}`,
+      `${BASE_URL}/membership-purchase/${checkout_session_id}`,
       {
         method: 'POST',
       }
@@ -58,7 +58,7 @@ export const requestProcessMembershipPurchase = async (checkout_session_id) => {
 
 export const register = async (userData) => {
   try {
-    const response = await fetch(`${dev_url}/user`, {
+    const response = await fetch(`${BASE_URL}/user`, {
       method: 'POST',
       headers: {'Content-type': 'application/json'},
       body: JSON.stringify(userData),
@@ -81,7 +81,7 @@ export const register = async (userData) => {
 
 export const logIn = async (userData) => {
   try {
-    const response = await fetch(`${dev_url}/user/login`, {
+    const response = await fetch(`${BASE_URL}/user/login`, {
       method: 'POST',
       headers: {'Content-type': 'application/json'},
       body: JSON.stringify(userData),
