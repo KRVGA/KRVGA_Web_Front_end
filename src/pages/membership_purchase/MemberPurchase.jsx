@@ -20,7 +20,7 @@ const MemberPurchase = () => {
         dispatch({type: 'GET_MEMB_TYPES', payload: result.membership_types});
         setShowAlert(false);
       } else {
-        dispatch({type: 'ERROR', payload: 'Something Went Wrong.'});
+        dispatch({type: 'ERROR', payload: 'Something Went Wrong, Try Again.'});
         setShowAlert(true);
       }
     };

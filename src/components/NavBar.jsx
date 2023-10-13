@@ -88,16 +88,16 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
           </Link>
           <Link
             className='hover:text-darkGrayishBlue underline'
-            to='/membership_purchase'
+            to='/register'
           >
             Sign-up
           </Link>
-          {/* <Link
+          <Link
             className='hover:text-darkGrayishBlue underline'
-            to='/membership_purchase'
+            to='/login'
           >
             Login
-          </Link> */}
+          </Link>
           <a
             className='hover:text-darkGrayishBlue underline'
             href='https://membership.nra.org/MultiStep/JoinToday'
