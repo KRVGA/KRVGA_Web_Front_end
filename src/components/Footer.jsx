@@ -1,7 +1,7 @@
 import IMAGES from '../Images/Images';
 const Footer = () => {
   return (
-    <footer className='bg-veryDarkBlue'>
+    <footer className='bg-veryDarkBlue mt-8'>
       {/* container flex */}
       <div className='container flex flex-col justify-between items-center px-6 py-10 mx-auto space-y-8 md:flex-row md:space-y-0 '>
         {/* social links */}
