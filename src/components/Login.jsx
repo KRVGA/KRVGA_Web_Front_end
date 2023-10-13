@@ -1,49 +1,17 @@
-import {useEffect, useState, useContext} from 'react';
+import {useState, useContext} from 'react';
 import {logIn} from '../context/actions.js';
 import Context from '../context/Context.jsx';
 
 const Login = () => {
-  const {dispatch, guest_purchase, isError, message, user} =
-    useContext(Context);
+  const {dispatch, isError, message} = useContext(Context);
 
   //   const [error, setError] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const [userData, setUserData] = useState({
-    guestPurchaseToken: null,
     email: '',
     password: '',
-    guest_purchase,
   });
-  const {email, password, guestPurchaseToken} = userData;
-
-  useEffect(() => {
-    if (!guest_purchase.accountAlreadyExist) return;
-
-    let itemStr = localStorage.getItem('guest_token');
-    if (!itemStr) {
-      dispatch({
-        type: 'ERROR',
-        payload: 'Unauthorized.',
-      });
-
-      return;
-    }
-    let item = JSON.parse(itemStr);
-    let now = new Date();
-    if (now.getTime() > item.expiry) {
-      localStorage.removeItem('guest_token');
-      dispatch({
-        type: 'ERROR',
-        payload: 'Unauthorized.',
-      });
-      return;
-    }
-
-    setUserData((prevState) => ({
-      ...prevState,
-      guestPurchaseToken: item,
-    }));
-  }, []);
+  const {email, password} = userData;
 
   const handleClick = () => {
     setShowAlert((prev) => !prev);
@@ -64,13 +32,11 @@ const Login = () => {
     const userDataObject = {
       email,
       password,
-      guestPurchaseToken,
-      membership_purchase_id: guest_purchase.membership_purchase_id,
     };
 
     try {
       const result = await logIn(userDataObject);
-
+      console.log('login jsx', result);
       if (!result.success) {
         dispatch({
           type: 'ERROR',
@@ -82,7 +48,6 @@ const Login = () => {
           type: 'USER_LOGIN',
           payload: result,
         });
-        localStorage.removeItem('guest_token');
         setTimeout(() => dispatch({type: 'REMOVE_ALERT'}), 2000);
       }
     } catch (error) {
@@ -123,6 +88,7 @@ const Login = () => {
         <div className='flex flex-col gap-2 items-center mb-2'>
           <button
             type='submit'
+            disabled={isError && showAlert}
             className={
               isError
                 ? 'inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg opacity-25 cursor-not-allowed'
@@ -149,15 +115,6 @@ const Login = () => {
                   <path d='M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z' />
                 </svg>
               </div>
-            </div>
-          )}
-          {!isError && message && (
-            <div
-              className='bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3'
-              role='alert'
-            >
-              <p className='font-bold'>{message}</p>
-              <p className='text-sm'>{user}</p>
             </div>
           )}
         </div>

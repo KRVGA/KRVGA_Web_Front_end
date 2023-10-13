@@ -1,46 +1,16 @@
-import {useState, useEffect, useContext} from 'react';
+import {useState, useContext} from 'react';
 import {register} from '../context/actions.js';
 import Context from '../context/Context.jsx';
 
 const Register = () => {
-  const {dispatch, guest_purchase, isError, message} = useContext(Context);
-
+  const {dispatch, isError, message} = useContext(Context);
   const [showAlert, setShowAlert] = useState(false);
 
   const [userData, setUserData] = useState({
-    guestPurchaseToken: null,
     email: '',
     password: '',
   });
-  const {email, password, guestPurchaseToken} = userData;
-
-  useEffect(() => {
-    if (!guest_purchase) return;
-    console.log('after');
-    let itemStr = localStorage.getItem('guest_token');
-    if (!itemStr) {
-      dispatch({
-        type: 'ERROR',
-        payload: 'Unauthorized.',
-      });
-      return;
-    }
-    let item = JSON.parse(itemStr);
-    let now = new Date();
-    if (now.getTime() > item.expiry) {
-      localStorage.removeItem('guest_token');
-      dispatch({
-        type: 'ERROR',
-        payload: 'Unauthorized.',
-      });
-      return;
-    }
-
-    setUserData((prevState) => ({
-      ...prevState,
-      guestPurchaseToken: item,
-    }));
-  }, []);
+  const {email, password} = userData;
 
   const handleClick = () => {
     setShowAlert((prev) => !prev);
@@ -61,8 +31,6 @@ const Register = () => {
     const userDataObject = {
       email,
       password,
-      guestPurchaseToken,
-      membership_purchase_id: guest_purchase.membership_purchase_id,
     };
 
     try {
@@ -79,7 +47,6 @@ const Register = () => {
           type: 'USER_REGISTER',
           payload: result,
         });
-        localStorage.removeItem('guest_token');
         setTimeout(() => dispatch({type: 'REMOVE_ALERT'}), 2000);
       }
     } catch (error) {
@@ -120,6 +87,7 @@ const Register = () => {
         <div className='flex flex-col gap-2 items-center mb-2'>
           <button
             type='submit'
+            disabled={isError && showAlert}
             className={
               isError
                 ? 'inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg opacity-25 cursor-not-allowed'

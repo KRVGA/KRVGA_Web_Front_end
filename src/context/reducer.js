@@ -6,6 +6,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         user: capitalizeWord(action.payload.email),
+        user_id: action.payload.id,
         isLoading: false,
         isError: false,
         message: action.payload.message,
@@ -14,6 +15,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         user: capitalizeWord(action.payload.email),
+        user_id: action.payload.id,
         isLoading: false,
         isError: false,
         message: action.payload.message,
@@ -30,13 +32,6 @@ const reducer = (state, action) => {
         isLoading: false,
         isError: false,
         membership_types: action.payload,
-      };
-    case 'GUEST_PURCHASE':
-      return {
-        ...state,
-        isLoading: false,
-        isError: false,
-        guest_purchase: {...action.payload},
       };
     case 'REMOVE_ALERT':
       return {

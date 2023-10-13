@@ -13,7 +13,6 @@ export const ContextProvider = ({children}) => {
     isLoading: false,
     message: '',
     membership_types: [],
-    guest_purchase: {},
   };
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
