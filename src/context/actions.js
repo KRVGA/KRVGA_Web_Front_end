@@ -87,7 +87,7 @@ export const logIn = async (userData) => {
       body: JSON.stringify(userData),
     });
     const result = await response.json();
-    console.log(result);
+
     if (result.success) {
       localStorage.setItem('ut', JSON.stringify(result.token));
       return result;

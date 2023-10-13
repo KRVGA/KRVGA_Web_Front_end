@@ -6,6 +6,7 @@ import {
   requestProcessMembershipPurchase,
 } from '../../context/actions.js';
 import Context from '../../context/Context.jsx';
+import {capitalizeWord} from '../../utils/utils.js';
 
 const Success = () => {
   const {dispatch, isError, message} = useContext(Context);
@@ -34,20 +35,10 @@ const Success = () => {
 
     const fetchMemberShipPurchase = async () => {
       const result = await requestProcessMembershipPurchase(session_id);
-      console.log('success', result);
-      let item = result.statusResponseObject.guestToken;
-      let now = new Date();
-      console.log('expiry', item.expiration);
-      if (now.getTime() > item.expiry) {
-        dispatch({
-          type: 'ERROR',
-          payload: 'Unauthorized.',
-        });
-        return;
-      }
+
       setUserData((prevState) => ({
         ...prevState,
-        guestPurchaseToken: item,
+        guestPurchaseToken: result.statusResponseObject.guestToken,
         membership_purchase_id:
           result.statusResponseObject.membership_purchase_id,
         full_name: result.statusResponseObject.full_name,
@@ -80,7 +71,6 @@ const Success = () => {
       membership_purchase_id,
       accountAlreadyExist,
     };
-    console.log('userDataObject', userDataObject);
 
     try {
       let result;
@@ -89,7 +79,7 @@ const Success = () => {
       } else if (guestPurchaseToken && !accountAlreadyExist) {
         result = await register(userDataObject);
       }
-      console.log('Success jsx', result);
+
       if (!result.success) {
         dispatch({
           type: 'ERROR',
@@ -121,7 +111,7 @@ const Success = () => {
     <div className='flex flex-col items-center membership-purchase '>
       <div className='px-4 sm:px-0 text-center'>
         <h3 className='text-base font-semibold leading-7 text-gray-900'>
-          {full_name ? `Thank you ${full_name}!` : 'Thank you!'}
+          {full_name ? `Thank you ${capitalizeWord(full_name)}!` : 'Thank you!'}
         </h3>
         <p className='mt-1 max-w-2xl text-sm leading-6 text-gray-500'>
           We have emailed you a confirmation of your purchase.

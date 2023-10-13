@@ -36,7 +36,7 @@ const Login = () => {
 
     try {
       const result = await logIn(userDataObject);
-      console.log('login jsx', result);
+
       if (!result.success) {
         dispatch({
           type: 'ERROR',
