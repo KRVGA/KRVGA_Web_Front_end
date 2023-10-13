@@ -4,8 +4,6 @@ import Context from '../context/Context.jsx';
 
 const Login = () => {
   const {dispatch, isError, message} = useContext(Context);
-
-  //   const [error, setError] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const [userData, setUserData] = useState({
     email: '',

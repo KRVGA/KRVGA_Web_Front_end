@@ -60,7 +60,7 @@ const MemberPurchase = () => {
             least 18 years of age on the date you apply.
           </h3>
           <div className='flex items-center justify-center min-h-height'>
-            <div className='flex flex-col my-6 space-y-6 md:space-y-0 md:space-x-6 md:flex-row md:my-0'>
+            <div className='flex flex-col my-10 space-y-6 md:space-y-0 md:space-x-6 md:flex-row md:my-0'>
               {membership_types.map((item) => (
                 <div
                   key={item.membership_id}
