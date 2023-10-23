@@ -16,6 +16,7 @@ const MembershipCard = ({membership_type, setMembershipSelected}) => {
   const showTermsConfirm = useCallback(() => {
     setOpenModal({
       async action(purchaseData) {
+        dispatch({type: 'LOADING'});
         const result = await requestPurchaseMembership(purchaseData);
 
         if (result?.success) {

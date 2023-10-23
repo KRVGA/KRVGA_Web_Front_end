@@ -4,11 +4,10 @@ import reducer from './reducer.js';
 const Context = createContext();
 
 export const ContextProvider = ({children}) => {
-  const ut = JSON.parse(localStorage.getItem('ut'));
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const initialState = {
-    ut: ut ? ut : null,
-    user: '',
+    user: user ? user : null,
     isError: false,
     isLoading: false,
     message: '',

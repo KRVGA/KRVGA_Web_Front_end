@@ -56,6 +56,25 @@ export const requestProcessMembershipPurchase = async (checkout_session_id) => {
   }
 };
 
+export const getUserProfileInfo = async (token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/user/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    const errorMessage =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    return {error: errorMessage};
+  }
+};
+
 export const register = async (userData) => {
   try {
     const response = await fetch(`${BASE_URL}/user`, {
@@ -64,9 +83,11 @@ export const register = async (userData) => {
       body: JSON.stringify(userData),
     });
     const result = await response.json();
-    if (result.success) {
-      localStorage.setItem('ut', JSON.stringify(result.token));
-      return result;
+    if (result.register_success) {
+      localStorage.setItem(
+        'user',
+        JSON.stringify({ut: result.token, id: result.id})
+      );
     }
     return result;
   } catch (error) {
@@ -88,9 +109,11 @@ export const logIn = async (userData) => {
     });
     const result = await response.json();
 
-    if (result.success) {
-      localStorage.setItem('ut', JSON.stringify(result.token));
-      return result;
+    if (result.login_success) {
+      localStorage.setItem(
+        'user',
+        JSON.stringify({ut: result.token, id: result.id})
+      );
     }
     return result;
   } catch (error) {
@@ -102,3 +125,5 @@ export const logIn = async (userData) => {
     return {error: errorMessage};
   }
 };
+
+export const logoutUser = async () => await localStorage.removeItem('user');
