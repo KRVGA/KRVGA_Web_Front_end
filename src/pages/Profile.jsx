@@ -7,7 +7,6 @@ const Profile = () => {
     const getUserInfo = async () => {
       dispatch({type: 'LOADING'});
       const result = await getUserProfileInfo(user.ut);
-      console.log(result);
     };
     getUserInfo();
   }, []);
