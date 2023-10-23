@@ -1,10 +1,24 @@
-import {Link} from 'react-router-dom';
+import {useContext} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import IMAGES from '../Images/Images';
+import Context from '../context/Context';
+import {logoutUser} from '../context/actions.js';
 import '../index.css';
 
 const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
+  const {user, dispatch} = useContext(Context);
+  const navigate = useNavigate();
+
   const handleClickHamburger = () => {
     setIsHamburgerOpen((prev) => !prev);
+  };
+
+  const handleLogout = () => {
+    logoutUser();
+    dispatch({
+      type: 'RESET',
+    });
+    navigate('/');
   };
 
   return (
@@ -38,18 +52,32 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
           >
             Join NRA
           </a>
-          <Link
-            className='hover:text-darkGrayishBlue hover:underline'
-            to='/register'
-          >
-            Sing-Up
-          </Link>
-          <Link
-            className='hover:text-darkGrayishBlue hover:underline'
-            to='/login'
-          >
-            Login
-          </Link>
+
+          {user ? (
+            <>
+              <Link
+                className='hover:text-darkGrayishBlue hover:underline'
+                to='/profile'
+              >
+                Profile
+              </Link>
+              <button
+                className='hover:text-darkGrayishBlue hover:underline'
+                onClick={handleLogout}
+              >
+                Log-out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                className='hover:text-darkGrayishBlue hover:underline'
+                to='/login'
+              >
+                Login
+              </Link>
+            </>
+          )}
         </section>
 
         <button
@@ -86,18 +114,31 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
           >
             Home
           </Link>
-          <Link
-            className='hover:text-darkGrayishBlue underline'
-            to='/register'
-          >
-            Sign-up
-          </Link>
-          <Link
-            className='hover:text-darkGrayishBlue underline'
-            to='/login'
-          >
-            Login
-          </Link>
+          {user ? (
+            <>
+              <Link
+                className='hover:text-darkGrayishBlue underline'
+                to='/profile'
+              >
+                Profile
+              </Link>
+              <button
+                className='hover:text-darkGrayishBlue underline'
+                onClick={handleLogout}
+              >
+                Log-out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                className='hover:text-darkGrayishBlue underline'
+                to='/login'
+              >
+                Login
+              </Link>
+            </>
+          )}
           <a
             className='hover:text-darkGrayishBlue underline'
             href='https://membership.nra.org/MultiStep/JoinToday'

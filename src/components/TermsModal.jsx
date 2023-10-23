@@ -1,8 +1,8 @@
 import {useState, useContext} from 'react';
-import {Modal} from 'flowbite-react';
+import {Modal, Spinner} from 'flowbite-react';
 import Context from '../context/Context';
 const TermsModal = (props) => {
-  const {isError, message} = useContext(Context);
+  const {isError, message, isLoading} = useContext(Context);
 
   const [purchaseData, setPurchaseData] = useState({
     customer_email: '',
@@ -478,43 +478,49 @@ const TermsModal = (props) => {
           </div>
         ) : (
           <div className=' flex gap-6'>
-            <button
-              disabled={
-                !has_signed_release ||
-                !full_name ||
-                !customer_email ||
-                !mail_address ||
-                !city ||
-                !state ||
-                !zip_code ||
-                !has_signed_pledge ||
-                (nra_member && !nra_member_number)
-              }
-              className={
-                !has_signed_release ||
-                !full_name ||
-                !customer_email ||
-                !mail_address ||
-                !city ||
-                !state ||
-                !zip_code ||
-                !has_signed_pledge ||
-                (nra_member && !nra_member_number)
-                  ? 'inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg opacity-25 cursor-not-allowed'
-                  : 'inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
-              }
-              onClick={() => {
-                props.action(purchaseData);
-              }}
-            >
-              Proceed
-            </button>
-            <button
-              className='inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
-              onClick={props.onClose}
-            >
-              Back
-            </button>
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <>
+                <button
+                  disabled={
+                    !has_signed_release ||
+                    !full_name ||
+                    !customer_email ||
+                    !mail_address ||
+                    !city ||
+                    !state ||
+                    !zip_code ||
+                    !has_signed_pledge ||
+                    (nra_member && !nra_member_number)
+                  }
+                  className={
+                    !has_signed_release ||
+                    !full_name ||
+                    !customer_email ||
+                    !mail_address ||
+                    !city ||
+                    !state ||
+                    !zip_code ||
+                    !has_signed_pledge ||
+                    (nra_member && !nra_member_number)
+                      ? 'inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg opacity-25 cursor-not-allowed'
+                      : 'inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
+                  }
+                  onClick={() => {
+                    props.action(purchaseData);
+                  }}
+                >
+                  Proceed
+                </button>
+                <button
+                  className='inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
+                  onClick={props.onClose}
+                >
+                  Back
+                </button>
+              </>
+            )}
           </div>
         )}
       </Modal.Footer>

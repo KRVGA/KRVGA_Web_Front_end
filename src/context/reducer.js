@@ -1,12 +1,9 @@
-import {capitalizeWord} from '../utils/utils';
-
 const reducer = (state, action) => {
   switch (action.type) {
     case 'USER_REGISTER':
       return {
         ...state,
-        user: capitalizeWord(action.payload.email),
-        user_id: action.payload.id,
+        user: action.payload,
         isLoading: false,
         isError: false,
         message: action.payload.message,
@@ -14,8 +11,7 @@ const reducer = (state, action) => {
     case 'USER_LOGIN':
       return {
         ...state,
-        user: capitalizeWord(action.payload.email),
-        user_id: action.payload.id,
+        user: action.payload,
         isLoading: false,
         isError: false,
         message: action.payload.message,
@@ -46,6 +42,13 @@ const reducer = (state, action) => {
         user: null,
         isError: false,
         isLoading: false,
+        message: '',
+      };
+    case 'LOADING':
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
         message: '',
       };
     case 'ERROR':
