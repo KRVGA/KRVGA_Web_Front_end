@@ -1,16 +1,16 @@
 import {useEffect, useContext, useState} from 'react';
-import {useSearchParams} from 'react-router-dom';
+import {useSearchParams, useNavigate} from 'react-router-dom';
 import {
   logIn,
   register,
   requestProcessMembershipPurchase,
 } from '../../context/actions.js';
 import Context from '../../context/Context.jsx';
-import {useNavigate} from 'react-router-dom';
+import {Spinner} from 'flowbite-react';
 import {capitalizeWord} from '../../utils/utils.js';
 
 const Success = () => {
-  const {dispatch, isError, message} = useContext(Context);
+  const {dispatch, isError, message, isLoading} = useContext(Context);
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
@@ -74,6 +74,7 @@ const Success = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    dispatch({type: 'LOADING'});
     const userDataObject = {
       email,
       password,
@@ -100,18 +101,30 @@ const Success = () => {
       if (result.login_success) {
         dispatch({
           type: 'USER_LOGIN',
-          payload: result,
+          payload: {
+            ut: result.token,
+            id: result.id,
+            email: capitalizeWord(result.email),
+            message: result.message,
+          },
         });
 
         setTimeout(() => dispatch({type: 'REMOVE_ALERT'}), 2000);
+        navigate('/profile');
       }
       if (result.register_success) {
         dispatch({
           type: 'USER_REGISTER',
-          payload: result,
+          payload: {
+            ut: result.token,
+            id: result.id,
+            email: capitalizeWord(result.email),
+            message: result.message,
+          },
         });
 
         setTimeout(() => dispatch({type: 'REMOVE_ALERT'}), 2000);
+        navigate('/profile');
       }
     } catch (error) {
       console.log(error);
@@ -212,7 +225,17 @@ const Success = () => {
                       : 'inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
                   }
                 >
-                  Submit
+                  {isLoading ? (
+                    <>
+                      <Spinner
+                        aria-label='Loading...'
+                        size='sm'
+                      />
+                      <span className='pl-3'>Loading...</span>
+                    </>
+                  ) : (
+                    <span> Submit </span>
+                  )}
                 </button>
                 {isError && showAlert && (
                   <div
