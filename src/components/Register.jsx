@@ -23,6 +23,10 @@ const Register = () => {
   }, [user, navigate]);
 
   const handleClick = () => {
+    setUserData({
+      email: '',
+      password: '',
+    });
     setShowAlert((prev) => !prev);
     dispatch({
       type: 'RESET',
@@ -125,6 +129,7 @@ const Register = () => {
             <span>
               You already have an account?{' '}
               <Link
+                onClick={handleClick}
                 to='/login'
                 className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
               >

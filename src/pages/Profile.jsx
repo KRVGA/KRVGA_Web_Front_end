@@ -1,12 +1,15 @@
 import {useContext, useEffect} from 'react';
 import Context from '../context/Context';
 import {getUserProfileInfo} from '../context/actions';
+
 const Profile = () => {
   const {user, dispatch} = useContext(Context);
+
   useEffect(() => {
     const getUserInfo = async () => {
       dispatch({type: 'LOADING'});
       const result = await getUserProfileInfo(user.ut);
+      console.log(result);
     };
     getUserInfo();
   }, []);

@@ -22,6 +22,10 @@ const Login = () => {
   }, [user, navigate]);
 
   const handleClick = () => {
+    setUserData({
+      email: '',
+      password: '',
+    });
     setShowAlert((prev) => !prev);
     dispatch({
       type: 'RESET',
@@ -124,6 +128,7 @@ const Login = () => {
             <span>
               You dont have an account?{' '}
               <Link
+                onClick={handleClick}
                 to='/register'
                 className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
               >
