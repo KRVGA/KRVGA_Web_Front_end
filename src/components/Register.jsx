@@ -23,10 +23,6 @@ const Register = () => {
   }, [user, navigate]);
 
   const handleClick = () => {
-    setUserData({
-      email: '',
-      password: '',
-    });
     setShowAlert((prev) => !prev);
     dispatch({
       type: 'RESET',
