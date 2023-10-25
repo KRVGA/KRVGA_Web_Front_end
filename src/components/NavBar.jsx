@@ -93,7 +93,7 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
         </button>
       </section>
 
-      <div className={` ${isHamburgerOpen ? 'mb-24' : ''} md:hidden`}>
+      <div className={` ${isHamburgerOpen ? 'mb-36' : ''} md:hidden`}>
         <div
           id='menu'
           className={

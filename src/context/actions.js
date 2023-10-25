@@ -126,4 +126,18 @@ export const logIn = async (userData) => {
   }
 };
 
+export const downloadPaperApp = async () => {
+  try {
+    const result = await fetch(`${BASE_URL}/download/2023Application.docx.pdf`);
+    return result;
+  } catch (error) {
+    const errorMessage =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    return {error: errorMessage};
+  }
+};
+
 export const logoutUser = async () => await localStorage.removeItem('user');
