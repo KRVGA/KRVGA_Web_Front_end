@@ -34,7 +34,7 @@ const MemberPurchase = () => {
   }, [dispatch]);
 
   return (
-    <div className=' text-center mb-40 px-10 pt-16 membership-purchase'>
+    <div className=' text-center px-10 pt-16'>
       {isError && showAlert ? (
         <div
           className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative'
