@@ -1,5 +1,5 @@
 import {useEffect, useContext, useState} from 'react';
-import {fetchMembershipTypes} from '../../context/actions.js';
+import {downloadPaperApp, fetchMembershipTypes} from '../../context/actions.js';
 import MembershipCard from '../../components/MembershipCard';
 import Context from '../../context/Context';
 import {Spinner} from 'flowbite-react';
@@ -33,8 +33,21 @@ const MemberPurchase = () => {
     setMembershipTypes();
   }, [dispatch]);
 
+  const handleCLick = async () => {
+    dispatch({type: 'LOADING'});
+    const result = await downloadPaperApp();
+
+    if (result.error) {
+      dispatch({
+        type: 'ERROR',
+        payload: result.message,
+      });
+    }
+    dispatch({type: 'RESET'});
+  };
+
   return (
-    <div className=' text-center mb-40 px-10 pt-16 membership-purchase'>
+    <div className=' text-center mb-40 px-10 pt-16  '>
       {isError && showAlert ? (
         <div
           className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative'
@@ -43,8 +56,8 @@ const MemberPurchase = () => {
           <span className='block sm:inline'>{`${message}`}</span>
         </div>
       ) : (
-        <div className='flex flex-col '>
-          <h3 className='block  text-lg font-semibold leading-snug tracking-normal text-inherit antialiased mb-2'>
+        <div className='flex flex-col'>
+          <h3 className='block  text-lg font-semibold leading-snug tracking-normal text-inherit antialiased mb-6'>
             You must be legally entitled to possess and use a firearm and at
             least 18 years of age on the date you apply.
           </h3>
@@ -74,6 +87,31 @@ const MemberPurchase = () => {
                     </div>
                   </div>
                 ))}
+                <div
+                  className={`${
+                    membershipSelected.name === 'paper'
+                      ? 'bg-brightRedLight rounded-xl text-white'
+                      : 'bg-slate-700 rounded-xl text-white'
+                  } `}
+                >
+                  <div className='p-8 mx-3 my-3 rounded-xl bg-veryDarkBlue'>
+                    <div className=' texte-center '>
+                      PAPER APPLICATION
+                      <h3 className='mt-2 text-center'>Regular / Spouse</h3>
+                      <div className='flex justify-center'>
+                        <a
+                          href='http://localhost:5000/api/download/2023Application.docx.pdf'
+                          rel='noopener noreferrer'
+                          target='_blank'
+                          onClick={handleCLick}
+                          className='inline-block px-10 py-3 my-6 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
+                        >
+                          Download{' '}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
