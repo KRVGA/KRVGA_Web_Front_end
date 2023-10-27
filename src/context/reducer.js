@@ -16,6 +16,18 @@ const reducer = (state, action) => {
         isError: false,
         message: action.payload.message,
       };
+    case 'USER_PROFILE':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          user_email: action.payload.user_email,
+          user_info: action.payload.membership_info,
+        },
+        isLoading: false,
+        isError: false,
+        message: '',
+      };
     case 'USER_LOGOUT':
       return {
         user: null,
