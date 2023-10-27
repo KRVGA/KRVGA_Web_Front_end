@@ -11,13 +11,12 @@ import {capitalizeWord} from '../../utils/utils.js';
 import useAuthStatus from '../../hooks/useAuthStatus.js';
 
 const Success = () => {
-  const {dispatch, isError, message, isLoading, user} = useContext(Context);
+  const {dispatch, isError, message, isLoading} = useContext(Context);
   const {loggedIn} = useAuthStatus();
 
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
-  const [goToProfile, setGoToProfile] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [userData, setUserData] = useState({
     guestPurchaseToken: null,
@@ -58,23 +57,10 @@ const Success = () => {
         full_name: result.statusResponseObject.full_name,
         accountAlreadyExist: result.statusResponseObject.accountAlreadyExist,
       }));
-      // if (
-      //   result.statusResponseObject.accountAlreadyExist &&
-      //   loggedIn &&
-      //   user.id === result.statusResponseObject.user_id
-      // ) {
-      //   setGoToProfile((prev) => !prev);
-      // }
     };
 
     fetchMemberShipPurchase();
   }, []);
-
-  // useEffect(() => {
-  //   if (goToProfile) {
-  //     navigate('/profile');
-  //   }
-  // }, [goToProfile, navigate]);
 
   const handleClick = () => {
     setShowAlert((prev) => !prev);

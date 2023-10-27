@@ -4,7 +4,7 @@ import Context from '../context/Context';
 
 const TermsModal = (props) => {
   const {isError, message, isLoading, user} = useContext(Context);
-  console.log(user);
+
   const [purchaseData, setPurchaseData] = useState({
     user_id: user?.id ? user.id : null,
     customer_email: '',
