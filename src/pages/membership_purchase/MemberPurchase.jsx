@@ -97,7 +97,7 @@ const MemberPurchase = () => {
                       <h3 className='mt-2 text-center'>Annual / Bundle</h3>
                       <div className='flex justify-center'>
                         <a
-                          href='https://krvga-7efc9d7c87af.herokuapp.com/api/download/2023Application.docx.pdf'
+                          href='https://krvga-7efc9d7c87af.herokuapp.com/api/download/application.docx.pdf'
                           rel='noopener noreferrer'
                           target='_blank'
                           className='inline-block px-10 py-3 my-6 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
