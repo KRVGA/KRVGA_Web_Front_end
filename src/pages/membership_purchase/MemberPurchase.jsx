@@ -34,20 +34,24 @@ const MemberPurchase = () => {
   }, [dispatch]);
 
   return (
-    <div className=' text-center px-10 pt-16'>
+    <div className=' text-center px-10 pt-16 membership'>
       {isError && showAlert ? (
-        <div
-          className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative'
-          role='alert'
-        >
-          <span className='block sm:inline'>{`${message}`}</span>
+        <div className=' text-center px-10 pt-16 mb-40'>
+          <div
+            className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative '
+            role='alert'
+          >
+            <span className='block sm:inline'>{`${message}`}</span>
+          </div>
         </div>
       ) : (
         <div className='flex flex-col'>
-          <h3 className='block  text-lg font-semibold leading-snug tracking-normal text-inherit antialiased mb-6'>
-            You must be legally entitled to possess and use a firearm and at
-            least 18 years of age on the date you apply.
-          </h3>
+          <div className='flex flex-col p-4 leading-normal'>
+            <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
+              You must be legally entitled to possess and use a firearm and at
+              least 18 years of age on the date you apply.
+            </h5>
+          </div>
           {isLoading ? (
             <Spinner
               size='xl'
@@ -65,7 +69,13 @@ const MemberPurchase = () => {
                         : 'bg-slate-700 rounded-xl text-white'
                     } `}
                   >
-                    <div className='p-8 mx-3 my-3 rounded-xl bg-veryDarkBlue'>
+                    <div
+                      className={
+                        item.name === 'annual'
+                          ? 'p-8 mx-3 my-3 rounded-xl bg-veryDarkBlue'
+                          : 'p-8 mx-3 my-3 rounded-xl bg-veryDarkBlue'
+                      }
+                    >
                       <MembershipCard
                         membership_type={item}
                         setMembershipSelected={setMembershipSelected}
@@ -84,7 +94,7 @@ const MemberPurchase = () => {
                   <div className='p-8 mx-3 my-3 rounded-xl bg-veryDarkBlue'>
                     <div className=' texte-center '>
                       PAPER APPLICATION
-                      <h3 className='mt-2 text-center'>Regular / Spouse</h3>
+                      <h3 className='mt-2 text-center'>Annual / Bundle</h3>
                       <div className='flex justify-center'>
                         <a
                           href='https://krvga-7efc9d7c87af.herokuapp.com/api/download/2023Application.docx.pdf'

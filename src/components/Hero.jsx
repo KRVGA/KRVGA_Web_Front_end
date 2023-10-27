@@ -10,7 +10,7 @@ const Hero = () => {
           alt='Logo'
         />
         <h3 className='mb-8 text-4xl font-bold text-darkGrayishBlueII md:text-5xl'>
-          Latets Updates From KRVGA
+          Latest Updates From KRVGA
         </h3>
         <h3 className='text-brightRed'>
           SITE UNDER CONSTRUCTION Tue Sep 26, 2023

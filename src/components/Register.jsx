@@ -71,7 +71,7 @@ const Register = () => {
 
   return (
     <div className='flex flex-col justify-center items-center membership-purchase '>
-      <section className='max-w-sm rounded overflow-hidden shadow-xl '>
+      <section className='max-w-sm rounded overflow-hidden bg-veryLightGray shadow-2xl '>
         <form
           onSubmit={onSubmit}
           className='flex flex-col items-center mx-3 my-8  rounded-xl'
