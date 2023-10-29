@@ -22,6 +22,7 @@ const Success = () => {
     guestPurchaseToken: null,
     email: '',
     password: '',
+    repeat_password: '',
     membership_purchase_id: '',
     full_name: '',
     accountAlreadyExist: null,
@@ -30,6 +31,7 @@ const Success = () => {
   const {
     email,
     password,
+    repeat_password,
     guestPurchaseToken,
     membership_purchase_id,
     full_name,
@@ -41,6 +43,7 @@ const Success = () => {
 
     const fetchMemberShipPurchase = async () => {
       const result = await requestProcessMembershipPurchase(session_id);
+
       if (!result.success) {
         dispatch({
           type: 'ERROR',
@@ -82,6 +85,7 @@ const Success = () => {
     const userDataObject = {
       email,
       password,
+      repeat_password,
       guestPurchaseToken,
       membership_purchase_id,
       accountAlreadyExist,
@@ -92,6 +96,14 @@ const Success = () => {
       if (guestPurchaseToken && accountAlreadyExist) {
         result = await logIn(userDataObject);
       } else if (guestPurchaseToken && !accountAlreadyExist) {
+        if (password !== repeat_password) {
+          dispatch({
+            type: 'ERROR',
+            payload: `Passwords don't match.`,
+          });
+          setShowAlert(true);
+          return;
+        }
         result = await register(userDataObject);
       }
 
@@ -182,13 +194,14 @@ const Success = () => {
 
             {accountAlreadyExist && !loggedIn && (
               <p className='mt-1 max-w-2xl text-sm leading-6 text-gray-800'>
-                Please Log into Your Account To Keep Up To Date Your Membership
-                Information
+                <span className='font-semibold'>Please Login </span>
+                To Your Account To Keep Up To Date Your Membership Information
               </p>
             )}
             {!accountAlreadyExist && (
               <p className='mt-1 max-w-2xl text-sm leading-6 text-gray-800'>
-                Please Register To Keep Up To Date Your Membership Information
+                <span className='font-semibold'>Please Register </span> To Keep
+                Up To Date Your Membership Information
               </p>
             )}
           </div>
@@ -232,6 +245,20 @@ const Success = () => {
                     required
                   />
                 </div>
+                {!accountAlreadyExist && (
+                  <div className='mb-6'>
+                    <input
+                      type='password'
+                      id='repeat_password'
+                      name='repeat_password'
+                      value={repeat_password}
+                      onChange={onChange}
+                      placeholder='Repeat Password'
+                      className=' w-[12rem] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                      required
+                    />
+                  </div>
+                )}
                 <div className='flex flex-col gap-2 items-center mb-2'>
                   <button
                     type='submit'

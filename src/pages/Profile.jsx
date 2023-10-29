@@ -5,13 +5,11 @@ import {Spinner} from 'flowbite-react';
 const Profile = () => {
   const {user, dispatch, isLoading, isError, message} = useContext(Context);
   const [showAlert, setShowAlert] = useState(false);
-  console.log(user);
 
   useEffect(() => {
     const getUserInfo = async () => {
       dispatch({type: 'LOADING'});
       const result = await getUserProfileInfo(user.ut);
-      console.log(result);
       if (result.success) {
         dispatch({type: 'USER_PROFILE', payload: result.user});
       }
