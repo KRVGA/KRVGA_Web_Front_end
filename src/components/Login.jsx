@@ -8,7 +8,7 @@ import {capitalizeWord} from '../utils/utils.js';
 const Login = () => {
   const {dispatch, isError, message, isLoading, user} = useContext(Context);
   const navigate = useNavigate();
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState(isError);
   const [userData, setUserData] = useState({
     email: '',
     password: '',
