@@ -58,6 +58,7 @@ const MembershipCard = ({membership_type, setMembershipSelected}) => {
 
       <div className='flex justify-center'>
         <button
+          disabled={true}
           className='inline-block px-10 py-3 my-6 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
           onClick={() => {
             handleCLick(membership_type);
