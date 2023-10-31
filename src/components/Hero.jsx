@@ -17,28 +17,28 @@ const Hero = () => {
         </h3>
 
         <div className='flex flex-col justify-center mt-2 md:flex-row md:space-x-6 gap-y-6'>
-          <div className='flex flex-col items-center p-6 space-y-6 rounded-lg bg-veryLightGray md:w-1/3'>
-            <h5 className='text-lg font-bold'>Comming Soon</h5>
-            <p className='max-w-3xl mx-auto mb-10 text-2xl text-darkGrayishBlueII'>
-              receiving membersip applications.
+          <div className='flex flex-col items-center p-6 space-y-6 rounded-lg bg-veryLightGray md:w-1/3 shadow-lg'>
+            <div className='font-bold text-xl '>Comming Soon</div>
+            <p className='max-w-3xl mx-auto mb-10 text-2xl text-darkGrayishBlueII text-base'>
               <Link
                 className='text-darkBlue underline'
                 to='/'
               >
-                Memberships
-              </Link>
+                Membersip
+              </Link>{' '}
+              applications.
             </p>
           </div>
-          <div className='flex flex-col items-center p-6 space-y-6 rounded-lg bg-veryLightGray md:w-1/3'>
-            <h5 className='text-lg font-bold'>Comming Soon</h5>
-            <p className='max-w-3xl mx-auto mb-10 text-2xl text-darkGrayishBlueII'>
+          <div className='flex flex-col items-center p-6 space-y-6 rounded-lg bg-veryLightGray md:w-1/3 shadow-lg'>
+            <div className='font-bold text-xl '>Comming Soon</div>
+            <p className='max-w-3xl mx-auto mb-10 text-2xl text-darkGrayishBlueII text-base'>
               <Link
                 className='text-darkBlue underline'
                 to='/'
               >
                 Register
               </Link>{' '}
-              as user to update your info
+              as user to update your info.
             </p>
           </div>
         </div>
