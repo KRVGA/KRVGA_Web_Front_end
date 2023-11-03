@@ -71,9 +71,12 @@ const Login = () => {
   return (
     <div className='flex flex-col justify-center items-center membership-purchase '>
       <section className='max-w-sm rounded overflow-hidden bg-veryLightGray shadow-2xl '>
+        <h2 className='text-base text-center mt-4 font-semibold leading-7 text-gray-900'>
+          Log in to your account
+        </h2>
         <form
           onSubmit={onSubmit}
-          className='flex flex-col items-center mx-3 my-8  rounded-xl'
+          className='flex flex-col items-center mx-3 my-4  rounded-xl'
         >
           <div className='mb-6 '>
             <input
@@ -129,6 +132,16 @@ const Login = () => {
                 className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
               >
                 Register
+              </Link>
+            </span>
+            <span>
+              Forgot your password?{' '}
+              <Link
+                onClick={handleClick}
+                to='/reset'
+                className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
+              >
+                Click here to reset
               </Link>
             </span>
             {isError && showAlert && (

@@ -9,9 +9,10 @@ import MemberPurchase from './pages/membership_purchase/MemberPurchase';
 import Success from './pages/membership_purchase/Success';
 import Failed from './pages/membership_purchase/Failed';
 import Profile from './pages/Profile';
-
-import {ContextProvider} from './context/Context';
 import Footer from './components/Footer';
+import Reset from './components/Reset';
+import ChangePwd from './pages/ChangePwd';
+import {ContextProvider} from './context/Context';
 
 function App() {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
@@ -41,6 +42,14 @@ function App() {
             <Route
               path='/login'
               element={<Login />}
+            />
+            <Route
+              path='/reset'
+              element={<Reset />}
+            />
+            <Route
+              path='/change_password/:tokenString'
+              element={<ChangePwd />}
             />
             <Route
               path='/register'

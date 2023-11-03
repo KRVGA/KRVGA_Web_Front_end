@@ -81,9 +81,12 @@ const Register = () => {
   return (
     <div className='flex flex-col justify-center items-center membership-purchase '>
       <section className='max-w-sm rounded overflow-hidden bg-veryLightGray shadow-2xl '>
+        <h2 className='text-base text-center mt-4 font-semibold leading-7 text-gray-900'>
+          Sign In
+        </h2>
         <form
           onSubmit={onSubmit}
-          className='flex flex-col items-center mx-3 my-8  rounded-xl'
+          className='flex flex-col items-center mx-3 my-4 rounded-xl'
         >
           <div className='mb-6 '>
             <input
