@@ -71,6 +71,13 @@ const reducer = (state, action) => {
         isLoading: false,
         message: action.payload,
       };
+    case 'SUCCESS':
+      return {
+        ...state,
+        isError: false,
+        isLoading: false,
+        message: action.payload,
+      };
 
     default:
       return state;
