@@ -124,7 +124,8 @@ const Login = () => {
                 <span> Login </span>
               )}
             </button>
-            <span>
+
+            <span className='text-center'>
               You dont have an account?{' '}
               <Link
                 onClick={handleClick}
@@ -134,16 +135,17 @@ const Login = () => {
                 Register
               </Link>
             </span>
-            <span>
+            <span className='text-center'>
               Forgot your password?{' '}
               <Link
                 onClick={handleClick}
                 to='/reset'
                 className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
               >
-                Click here to reset
+                Reset
               </Link>
             </span>
+
             {isError && showAlert && (
               <div
                 className=' bg-red-100 justify-center border border-red-400 text-red-700 px-6 py-3 rounded relative'
