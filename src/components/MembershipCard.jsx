@@ -16,7 +16,7 @@ const MembershipCard = ({membership_type, setMembershipSelected}) => {
   const showTermsConfirm = useCallback(() => {
     setOpenModal({
       async action(purchaseData) {
-        if (purchaseData.is_same_address) {
+        if (purchaseData.is_membership_bundle && purchaseData.is_same_address) {
           purchaseData.spouse_mail_address = purchaseData.mail_address;
           purchaseData.spouse_city = purchaseData.city;
           purchaseData.spouse_state = purchaseData.state;
