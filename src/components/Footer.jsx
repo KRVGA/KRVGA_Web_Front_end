@@ -1,9 +1,9 @@
 import IMAGES from '../Images/Images';
 const Footer = () => {
   return (
-    <footer className='bg-veryDarkBlue mt-8'>
+    <footer className='bg-veryDarkBlue'>
       {/* container flex */}
-      <div className='container flex flex-col justify-between items-center px-6 py-10 mx-auto space-y-8 md:flex-row md:space-y-0 '>
+      <div className='container flex flex-col justify-between items-center px-6 py-12 mx-auto space-y-8 md:flex-row md:space-y-0 '>
         {/* social links */}
         <div className='flex flex-col-reverse items-center justify-between space-y-12 md:flex-col md:space-y-0 md:items-start'>
           {/* social links */}
@@ -24,7 +24,7 @@ const Footer = () => {
         {/* list-container */}
         <div className='flex flex-col justify-between'>
           <div className='flex flex-col space-y-3 text-white'>
-            <div className=' flex flex-col items-center'>
+            <div className='flex flex-col items-center text-center'>
               <a
                 href='https://maps.app.goo.gl/AuF527HJTAqnP19k9'
                 target='_blank'
@@ -33,7 +33,9 @@ const Footer = () => {
               >
                 KERN RIVER VALLEY GUN ASSOCIATION
               </a>
-              <p>PO Box 958, Wofford Heights, CA 93285</p>
+              <p className='text-center'>
+                PO Box 958, Wofford Heights, CA 93285
+              </p>
               <p>(760) 223-5083</p>
             </div>
           </div>
