@@ -26,7 +26,7 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
       <section className='flex items-center justify-between'>
         <div className='pt-2'>
           <img
-            className='h-40 w-40'
+            className='h-14 w-14'
             src={IMAGES.logoAlt}
             alt='Logo'
           />
