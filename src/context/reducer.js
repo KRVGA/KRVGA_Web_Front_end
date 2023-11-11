@@ -21,8 +21,11 @@ const reducer = (state, action) => {
         ...state,
         user: {
           ...state.user,
-          user_email: action.payload.user_email,
-          user_info: action.payload.membership_info,
+          admn: action.payload.info.admn,
+          superadm: action.payload.info.superadmn,
+          email: action.payload.info.email,
+          user_id: action.payload.info.user_id,
+          membeship_info: action.payload.membership_info,
         },
         isLoading: false,
         isError: false,

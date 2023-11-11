@@ -19,7 +19,7 @@ const TermsModal = (props) => {
     spouse_city: '',
     spouse_state: '',
     spouse_zip_code: '',
-    is_same_address: true,
+    is_same_address: props.membership_type.name === 'bundle' ? true : false,
     has_signed_release: false,
     has_signed_pledge: false,
     disabled_veteran: false,

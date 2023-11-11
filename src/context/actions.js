@@ -1,4 +1,5 @@
-const BASE_URL = 'https://krvga-7efc9d7c87af.herokuapp.com/api';
+// const BASE_URL = 'https://krvga-7efc9d7c87af.herokuapp.com/api';
+const BASE_URL = 'http://localhost:5000/api';
 
 export const fetchMembershipTypes = async () => {
   try {
@@ -75,6 +76,7 @@ export const getUserProfileInfo = async (token) => {
 };
 
 export const register = async (userData) => {
+  userData.email = userData.email.toLowerCase();
   try {
     const response = await fetch(`${BASE_URL}/user`, {
       method: 'POST',
@@ -100,6 +102,7 @@ export const register = async (userData) => {
 };
 
 export const logIn = async (userData) => {
+  userData.email = userData.email.toLowerCase();
   try {
     const response = await fetch(`${BASE_URL}/user/login`, {
       method: 'POST',
@@ -140,6 +143,7 @@ export const downloadPaperApp = async () => {
 };
 
 export const resetPwd = async (email) => {
+  email = email.toLowerCase();
   try {
     const response = await fetch(`${BASE_URL}/user/password-reset`, {
       headers: {'Content-type': 'application/json'},
@@ -147,7 +151,6 @@ export const resetPwd = async (email) => {
       body: JSON.stringify({email}),
     });
     const result = await response.json();
-
     return result;
   } catch (error) {
     const errorMessage =
