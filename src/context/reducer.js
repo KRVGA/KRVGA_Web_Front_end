@@ -21,11 +21,14 @@ const reducer = (state, action) => {
         ...state,
         user: {
           ...state.user,
-          admn: action.payload.info.admn,
-          superadm: action.payload.info.superadmn,
-          email: action.payload.info.email,
-          user_id: action.payload.info.user_id,
-          membeship_info: action.payload.membership_info,
+          admn: action.payload.admn,
+          superadm: action.payload.superadmn,
+          email: action.payload.email,
+          user_id: action.payload.user_id,
+          life_member_update: action.payload.life_member_update
+            ? action.payload.life_member_update
+            : false,
+          membership_info: action.payload.membership_info,
         },
         isLoading: false,
         isError: false,
@@ -59,6 +62,14 @@ const reducer = (state, action) => {
         isLoading: false,
         message: '',
       };
+    case 'RESET_ALERTS':
+      return {
+        ...state,
+        user: {...state.user},
+        isError: false,
+        isLoading: false,
+        message: '',
+      };
     case 'LOADING':
       return {
         ...state,
@@ -69,7 +80,7 @@ const reducer = (state, action) => {
     case 'ERROR':
       return {
         ...state,
-        user: null,
+        user: state.user ? {...state.user} : null,
         isError: true,
         isLoading: false,
         message: action.payload,
@@ -77,9 +88,23 @@ const reducer = (state, action) => {
     case 'SUCCESS':
       return {
         ...state,
+        user: {
+          ...state.user,
+          life_member_update: false,
+          membership_info: action.payload.user_membership_info,
+        },
         isError: false,
         isLoading: false,
-        message: action.payload,
+        message: action.payload.message,
+        success: true,
+      };
+    case 'UPDATE_SUCCESS':
+      return {
+        ...state,
+        isError: false,
+        isLoading: false,
+        message: action.payload.message,
+        success: true,
       };
 
     default:

@@ -119,8 +119,8 @@ const Success = () => {
           type: 'USER_LOGIN',
           payload: {
             ut: result.token,
-            id: result.id,
             email: capitalizeWord(result.email),
+            id: result.id,
             message: result.message,
           },
         });
@@ -133,8 +133,8 @@ const Success = () => {
           type: 'USER_REGISTER',
           payload: {
             ut: result.token,
-            id: result.id,
             email: capitalizeWord(result.email),
+            id: result.id,
             message: result.message,
           },
         });

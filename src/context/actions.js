@@ -55,12 +55,78 @@ export const requestProcessMembershipPurchase = async (checkout_session_id) => {
   }
 };
 
+export const processLifeMemberUpdate = async (token, life_member_data) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/membership-purchase/life-update`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(life_member_data),
+      }
+    );
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    const errorMessage =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    return {error: errorMessage ? errorMessage : 'Something went wrong.'};
+  }
+};
+
 export const getUserProfileInfo = async (token) => {
   try {
-    const response = await fetch(`${BASE_URL}/user/me`, {
+    const response = await fetch(`${BASE_URL}/user/profile`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    const errorMessage =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    return {error: errorMessage ? errorMessage : 'Something went wrong.'};
+  }
+};
+
+export const getSingleMembershipInfo = async (token, id) => {
+  try {
+    const response = await fetch(`${BASE_URL}/user/profile/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    const errorMessage =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    return {error: errorMessage ? errorMessage : 'Something went wrong.'};
+  }
+};
+
+export const updateMembershipInfo = async (token, updatedInfo) => {
+  try {
+    const response = await fetch(`${BASE_URL}/membership-purchase/update`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(updatedInfo),
     });
     const result = await response.json();
     return result;
@@ -86,7 +152,12 @@ export const register = async (userData) => {
     if (result.register_success) {
       localStorage.setItem(
         'user',
-        JSON.stringify({ut: result.token, id: result.id})
+        JSON.stringify({
+          ut: result.token,
+          id: result.id,
+          email: result.email,
+          membership_info: [],
+        })
       );
     }
     return result;
@@ -113,7 +184,12 @@ export const logIn = async (userData) => {
     if (result.login_success) {
       localStorage.setItem(
         'user',
-        JSON.stringify({ut: result.token, id: result.id})
+        JSON.stringify({
+          ut: result.token,
+          id: result.id,
+          email: result.email,
+          membership_info: [],
+        })
       );
     }
     return result;
@@ -129,7 +205,7 @@ export const logIn = async (userData) => {
 
 export const downloadPaperApp = async () => {
   try {
-    const result = await fetch(`${BASE_URL}/download/2023Application.docx.pdf`);
+    const result = await fetch(`${BASE_URL}/download/application.docx.pdf`);
     return result;
   } catch (error) {
     const errorMessage =

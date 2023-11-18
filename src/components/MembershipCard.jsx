@@ -42,7 +42,7 @@ const MembershipCard = ({membership_type, setMembershipSelected}) => {
       },
       onClose() {
         setOpenModal(null);
-        dispatch({type: 'RESET'});
+        dispatch({type: 'RESET_ALERTS'});
       },
     });
   }, [setOpenModal, dispatch]);

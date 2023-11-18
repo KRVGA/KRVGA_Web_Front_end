@@ -4,9 +4,10 @@ import Context from '../context/Context.jsx';
 import {useNavigate, Link} from 'react-router-dom';
 import {Spinner} from 'flowbite-react';
 import {capitalizeWord} from '../utils/utils.js';
+import useAuthStatus from '../hooks/useAuthStatus.js';
 
 const Login = () => {
-  const {dispatch, isError, message, isLoading, user} = useContext(Context);
+  const {dispatch, isError, message, isLoading} = useContext(Context);
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(isError);
   const [userData, setUserData] = useState({
@@ -14,12 +15,13 @@ const Login = () => {
     password: '',
   });
   const {email, password} = userData;
+  const {loggedIn} = useAuthStatus();
 
   useEffect(() => {
-    if (user) {
+    if (loggedIn) {
       navigate('/profile');
     }
-  }, [user, navigate]);
+  }, [loggedIn, navigate]);
 
   const handleClick = () => {
     setShowAlert((prev) => !prev);
@@ -57,9 +59,9 @@ const Login = () => {
           type: 'USER_LOGIN',
           payload: {
             ut: result.token,
-            id: result.id,
             email: capitalizeWord(result.email),
             message: result.message,
+            id: result.id,
           },
         });
       }
