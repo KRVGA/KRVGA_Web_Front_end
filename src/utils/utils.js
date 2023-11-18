@@ -17,3 +17,25 @@ export const dateToString = (dateTime) => {
 
   return formattedDate;
 };
+
+export const getMembershipType = (membershipItem) => {
+  if (membershipItem.life_membership_qty > 0) {
+    return 'Life';
+  }
+  if (
+    membershipItem.is_membership_bundle &&
+    membershipItem.life_membership_qty > 0
+  ) {
+    return 'Life + Spouse';
+  }
+  if (membershipItem.is_membership_bundle) {
+    return 'Annual + Spouse';
+  }
+
+  if (
+    !membershipItem.is_membership_bundle &&
+    membershipItem.annual_membership_qty > 0
+  ) {
+    return 'Annual';
+  }
+};

@@ -7,7 +7,7 @@ const TermsModal = (props) => {
 
   const [purchaseData, setPurchaseData] = useState({
     user_id: user?.id ? user.id : null,
-    customer_email: '',
+    customer_email: user?.email ? user?.email : '',
     full_name: '',
     mail_address: '',
     city: '',

@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import Reset from './components/Reset';
 import ChangePwd from './pages/ChangePwd';
 import {ContextProvider} from './context/Context';
+import MembershipItem from './components/MembershipItem';
 
 function App() {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
@@ -74,6 +75,16 @@ function App() {
               <Route
                 path='/profile'
                 element={<Profile />}
+              />
+            </Route>
+
+            <Route
+              path='/details/:membershipId'
+              element={<PrivateRoute />}
+            >
+              <Route
+                path='/details/:membershipId'
+                element={<MembershipItem />}
               />
             </Route>
           </Routes>

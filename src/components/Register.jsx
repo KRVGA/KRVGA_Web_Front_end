@@ -4,9 +4,11 @@ import {useNavigate, Link} from 'react-router-dom';
 import Context from '../context/Context.jsx';
 import {Spinner} from 'flowbite-react';
 import {capitalizeWord} from '../utils/utils.js';
-
+import useAuthStatus from '../hooks/useAuthStatus.js';
 const Register = () => {
-  const {dispatch, isError, message, isLoading, user} = useContext(Context);
+  const {dispatch, isError, message, isLoading} = useContext(Context);
+  const {loggedIn} = useAuthStatus();
+
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
 
@@ -18,10 +20,10 @@ const Register = () => {
   const {email, password, repeat_password} = userData;
 
   useEffect(() => {
-    if (user) {
+    if (loggedIn) {
       navigate('/profile');
     }
-  }, [user, navigate]);
+  }, [loggedIn, navigate]);
 
   const handleClick = () => {
     setShowAlert((prev) => !prev);
@@ -45,8 +47,9 @@ const Register = () => {
       password,
       repeat_password,
     };
+
     try {
-      if (password !== repeat_password) {
+      if (userDataObject.password !== userDataObject.repeat_password) {
         dispatch({
           type: 'ERROR',
           payload: `Passwords don't match.`,
@@ -55,6 +58,7 @@ const Register = () => {
         return;
       }
       const result = await register(userDataObject);
+
       if (!result.success) {
         dispatch({
           type: 'ERROR',
@@ -67,9 +71,9 @@ const Register = () => {
           type: 'USER_REGISTER',
           payload: {
             ut: result.token,
-            id: result.id,
             email: capitalizeWord(result.email),
             message: result.message,
+            id: result.id,
           },
         });
       }
