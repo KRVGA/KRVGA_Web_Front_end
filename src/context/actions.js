@@ -1,5 +1,5 @@
-// const BASE_URL = 'https://krvga-7efc9d7c87af.herokuapp.com/api';
-const BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = 'https://krvga-7efc9d7c87af.herokuapp.com/api';
+
 export const fetchMembershipTypes = async () => {
   try {
     const response = await fetch(`${BASE_URL}/membership-purchase/types`);
