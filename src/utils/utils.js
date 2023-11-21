@@ -39,3 +39,38 @@ export const getMembershipType = (membershipItem) => {
     return 'Annual';
   }
 };
+
+export const exportToCSV = (data, filename) => {
+  data.sort((a, b) => new Date(b.UPDATED) - new Date(a.UPDATED));
+
+  const formattedData = data.map((record) => {
+    return {
+      ...record,
+      CREATED: new Date(record.CREATED).toLocaleDateString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+      }),
+      UPDATED: new Date(record.UPDATED).toLocaleDateString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+      }),
+    };
+  });
+
+  const csvContent =
+    'data:text/csv;charset=utf-8,' + convertArrayToCSV(formattedData);
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement('a');
+  link.setAttribute('href', encodedUri);
+  link.setAttribute('download', `${filename}.csv`);
+  document.body.appendChild(link);
+  link.click();
+};
+
+const convertArrayToCSV = (array) => {
+  const header = Object.keys(array[0]).join(',');
+  const rows = array.map((obj) => Object.values(obj).join(','));
+  return [header, ...rows].join('\n');
+};

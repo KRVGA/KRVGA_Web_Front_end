@@ -1,5 +1,5 @@
-const BASE_URL = 'https://krvga-7efc9d7c87af.herokuapp.com/api';
-
+// const BASE_URL = 'https://krvga-7efc9d7c87af.herokuapp.com/api';
+const BASE_URL = 'http://localhost:5000/api';
 export const fetchMembershipTypes = async () => {
   try {
     const response = await fetch(`${BASE_URL}/membership-purchase/types`);
@@ -206,6 +206,28 @@ export const logIn = async (userData) => {
 export const downloadPaperApp = async () => {
   try {
     const result = await fetch(`${BASE_URL}/download/application.docx.pdf`);
+    return result;
+  } catch (error) {
+    const errorMessage =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    return {error: errorMessage ? errorMessage : 'Something went wrong.'};
+  }
+};
+
+export const getCsvReport = async (token) => {
+  try {
+    const response = await fetch(`${BASE_URL}/user/admin/report`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const result = await response.json();
     return result;
   } catch (error) {
     const errorMessage =
