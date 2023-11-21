@@ -1,6 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
 import Context from '../context/Context';
-import {getUserProfileInfo} from '../context/actions';
+import {getCsvReport, getUserProfileInfo} from '../context/actions';
+import {exportToCSV} from '../utils/utils';
 import {Spinner} from 'flowbite-react';
 import {dateToString, capitalizeWord, getMembershipType} from '../utils/utils';
 import {Link} from 'react-router-dom';
@@ -8,9 +9,9 @@ import LifeMemberUpdate from '../components/LifeMemberUpdate';
 
 const Profile = () => {
   const {user, dispatch, isLoading, isError, message} = useContext(Context);
-
   const [showAlert, setShowAlert] = useState(false);
   const [userMembershps, setUserMemberships] = useState([]);
+
   useEffect(() => {
     const getUserInfo = async () => {
       dispatch({type: 'LOADING'});
@@ -47,6 +48,19 @@ const Profile = () => {
     dispatch({
       type: 'RESET_ALERTS',
     });
+  };
+
+  const handleReportCLick = async () => {
+    const response = await getCsvReport(user.ut);
+    if (!response.success) {
+      dispatch({
+        type: 'ERROR',
+        payload: response.message ? response.message : 'Something Went Wrong.',
+      });
+      setShowAlert(true);
+    } else {
+      exportToCSV(response.report, 'mebership report');
+    }
   };
 
   if (isLoading) {
@@ -97,9 +111,11 @@ const Profile = () => {
                     {user?.email && capitalizeWord(user.email)}
                   </span>
                   {(user?.admn || user?.superadmn) && (
-                    <span className='bg-blue-100 text-blue-800 text-center text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300'>
-                      Administrator
-                    </span>
+                    <>
+                      <span className='bg-blue-100 text-blue-800 text-center text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300'>
+                        Administrator
+                      </span>
+                    </>
                   )}
                 </div>
               </div>
@@ -127,18 +143,36 @@ const Profile = () => {
                 <span className='bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300'>
                   {user?.email && capitalizeWord(user.email)}
                 </span>
-                {(user?.admn || user?.superadmn) && (
+              </div>
+              {(user?.admn || user?.superadmn) && (
+                <>
                   <span className='bg-blue-100 text-blue-800 text-center text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300'>
                     Administrator
                   </span>
-                )}
-              </div>
+                  <button
+                    type='button'
+                    onClick={handleReportCLick}
+                    className='px-2 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                  >
+                    {isLoading ? (
+                      <>
+                        <Spinner
+                          aria-label='Loading...'
+                          size='sm'
+                        />
+                        <span className='pl-3'>Loading...</span>
+                      </>
+                    ) : (
+                      <span> Get Report </span>
+                    )}
+                  </button>
+                </>
+              )}
             </div>
           </div>
           <div>
             {
               /* Users with no membership  */
-
               !userMembershps[0]?.annual_membership_qty &&
               !userMembershps[0]?.life_membership_qty &&
               !user?.life_member_update ? (

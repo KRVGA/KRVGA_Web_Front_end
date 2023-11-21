@@ -22,7 +22,7 @@ const reducer = (state, action) => {
         user: {
           ...state.user,
           admn: action.payload.admn,
-          superadm: action.payload.superadmn,
+          superadmn: action.payload.superadmn,
           email: action.payload.email,
           user_id: action.payload.user_id,
           life_member_update: action.payload.life_member_update
