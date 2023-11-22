@@ -260,7 +260,7 @@ const LifeMemberUpdate = ({setShowAlert}) => {
                 htmlFor='add_spouse'
                 className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
               >
-                Add Spouse: $20.00
+                Add Annual Membership Spouse: $20.00
               </label>
             </div>
             <div className='grid md:grid-cols-2 md:gap-6'>
