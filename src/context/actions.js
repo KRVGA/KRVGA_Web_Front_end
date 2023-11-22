@@ -1,5 +1,4 @@
 const BASE_URL = 'https://krvga-7efc9d7c87af.herokuapp.com/api';
-
 export const fetchMembershipTypes = async () => {
   try {
     const response = await fetch(`${BASE_URL}/membership-purchase/types`);
@@ -56,18 +55,21 @@ export const requestProcessMembershipPurchase = async (checkout_session_id) => {
 };
 
 export const processLifeMemberUpdate = async (token, life_member_data) => {
+  let endpoint = `${BASE_URL}/membership-purchase/life-update`;
+
+  if (life_member_data.is_membership_bundle && life_member_data.items) {
+    endpoint = `${BASE_URL}/stripe/checkout-session`;
+  }
+
   try {
-    const response = await fetch(
-      `${BASE_URL}/membership-purchase/life-update`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(life_member_data),
-      }
-    );
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(life_member_data),
+    });
     const result = await response.json();
     return result;
   } catch (error) {

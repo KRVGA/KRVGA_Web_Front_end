@@ -34,6 +34,7 @@ const TermsModal = (props) => {
     spouse_crpa_member: false,
     spouse_nra_member: false,
     spouse_nra_member_number: '',
+    life_membership_qty: 0,
     is_membership_bundle:
       props.membership_type.name === 'bundle' ? true : false,
     items:

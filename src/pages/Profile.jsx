@@ -176,15 +176,22 @@ const Profile = () => {
               !userMembershps[0]?.annual_membership_qty &&
               !userMembershps[0]?.life_membership_qty &&
               !user?.life_member_update ? (
-                <p className='text-2xl text-center p-2 text-gray-800 dark:text-gray-500'>
-                  Please Purchase{' '}
-                  <Link
-                    className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
-                    to='/membership_purchase'
-                  >
-                    Membersip
-                  </Link>
-                </p>
+                <div className='flex flex-col'>
+                  <p className='text-center'>
+                    If you have a life membership please come back later to
+                    finish your membership application.
+                  </p>
+                  <p className='text-2xl text-center p-2 text-gray-800 dark:text-gray-500'>
+                    Otherwise purchase a new{' '}
+                    <Link
+                      className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
+                      to='/membership_purchase'
+                    >
+                      Membersip
+                    </Link>
+                    .
+                  </p>
+                </div>
               ) : (
                 <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
                   <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
