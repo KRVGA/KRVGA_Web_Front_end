@@ -37,10 +37,8 @@ const LifeMemberUpdate = ({setShowAlert}) => {
     spouse_nra_member: false,
     spouse_nra_member_number: '',
     is_membership_bundle: false,
-    add_spouse: false,
     life_membership_qty: 1,
-    spouse_membership_qty: 0,
-    price: 45000,
+    add_spouse: false,
   });
 
   const {
@@ -73,9 +71,8 @@ const LifeMemberUpdate = ({setShowAlert}) => {
     spouse_nra_member,
     spouse_nra_member_number,
     is_membership_bundle,
-    add_spouse,
     life_membership_qty,
-    spouse_membership_qty,
+    add_spouse,
   } = purchaseData;
   const pronoun = add_spouse ? 'We' : 'I';
 
@@ -108,7 +105,7 @@ const LifeMemberUpdate = ({setShowAlert}) => {
     if (purchaseData.add_spouse) {
       purchaseData.is_membership_bundle = true;
       purchaseData.spouse_membership_qty = 1;
-
+      purchaseData.items = [{id: 2, quantity: 1}];
       if (purchaseData.is_same_address) {
         purchaseData.spouse_mail_address = purchaseData.mail_address;
         purchaseData.spouse_city = purchaseData.city;
@@ -117,6 +114,8 @@ const LifeMemberUpdate = ({setShowAlert}) => {
       }
     } else {
       purchaseData.is_membership_bundle = false;
+      purchaseData.items = null;
+      purchaseData.spouse_membership_qty = 0;
       purchaseData.is_same_address = false;
       purchaseData.spouse_mail_address = '';
       purchaseData.spouse_city = '';
@@ -129,9 +128,10 @@ const LifeMemberUpdate = ({setShowAlert}) => {
 
     dispatch({type: 'LOADING'});
     const result = await processLifeMemberUpdate(user.ut, purchaseData);
-
-    if (result?.success) {
+    if (result.success && !result.url && !result.session_id) {
       dispatch({type: 'SUCCESS', payload: result});
+    } else if (result.url && result.session_id) {
+      window.location.replace(`${result.url}`);
     } else {
       dispatch({
         type: 'ERROR',
@@ -260,7 +260,7 @@ const LifeMemberUpdate = ({setShowAlert}) => {
                 htmlFor='add_spouse'
                 className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
               >
-                Add Spouse
+                Add Spouse: $20.00
               </label>
             </div>
             <div className='grid md:grid-cols-2 md:gap-6'>
@@ -523,7 +523,7 @@ const LifeMemberUpdate = ({setShowAlert}) => {
             )}
           </div>
           <div className='flex flex-col justify-center pl-4 pt-4 mb-2 border border-gray-200 rounded dark:border-gray-700'>
-            {add_spouse && <h3 className='text-center'>Main Annual Member</h3>}
+            {add_spouse && <h3 className='text-center'>Main Member</h3>}
             {
               <div className='relative z-0 w-full mb-6 group'>
                 <input

@@ -34,7 +34,7 @@ const MemberPurchase = () => {
   }, [dispatch]);
 
   return (
-    <div className=' text-center px-10 pt-16 md:h-full'>
+    <div className=' text-center px-10 pt-8 md:h-full'>
       {isError && showAlert ? (
         <div className=' text-center  '>
           <div

@@ -19,7 +19,10 @@ export const dateToString = (dateTime) => {
 };
 
 export const getMembershipType = (membershipItem) => {
-  if (membershipItem.life_membership_qty > 0) {
+  if (
+    membershipItem.life_membership_qty > 0 &&
+    !membershipItem.is_membership_bundle
+  ) {
     return 'Life';
   }
   if (
