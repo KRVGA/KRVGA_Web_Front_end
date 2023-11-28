@@ -14,6 +14,7 @@ import Reset from './components/Reset';
 import ChangePwd from './pages/ChangePwd';
 import {ContextProvider} from './context/Context';
 import MembershipItem from './components/MembershipItem';
+import Calendar from './pages/Calendar';
 
 function App() {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
@@ -39,6 +40,10 @@ function App() {
             <Route
               path='/'
               element={<Home />}
+            />
+            <Route
+              path='/calendar'
+              element={<Calendar />}
             />
             <Route
               path='/login'
