@@ -40,6 +40,12 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
           </Link>
           <Link
             className='hover:text-darkGrayishBlue hover:underline'
+            to='/calendar'
+          >
+            Calendar
+          </Link>
+          <Link
+            className='hover:text-darkGrayishBlue hover:underline'
             to='/membership_purchase'
           >
             Memberships
@@ -113,6 +119,12 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
             to='/'
           >
             Home
+          </Link>
+          <Link
+            className='hover:text-darkGrayishBlue underline'
+            to='/calendar'
+          >
+            Calendar
           </Link>
           {user ? (
             <>
