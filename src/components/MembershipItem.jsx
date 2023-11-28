@@ -17,6 +17,7 @@ const MembershipItem = () => {
   const [updatedInfo, setUpdatedInfo] = useState({
     full_name: '',
     address: '',
+    phone_number: '',
     city: '',
     state: '',
     zip_code: '',
@@ -30,6 +31,7 @@ const MembershipItem = () => {
   const {
     full_name,
     address,
+    phone_number,
     city,
     state,
     zip_code,
@@ -61,10 +63,15 @@ const MembershipItem = () => {
   }, []);
 
   const onChange = (e) => {
+    let inputValue = e.target.value;
+    if (e.target.type === 'tel' && e.target.name === 'phone_number') {
+      inputValue = inputValue.replace(/\D/g, '');
+      inputValue = inputValue.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+    }
     setUpdatedInfo((prevState) => ({
       ...prevState,
       [e.target.name]:
-        e.target.name === 'is_same_address' ? e.target.checked : e.target.value,
+        e.target.name === 'is_same_address' ? e.target.checked : inputValue,
     }));
   };
   const HandleOnCLick = () => {
@@ -79,7 +86,6 @@ const MembershipItem = () => {
       updatedInfo.spouse_state = state;
       updatedInfo.spouse_zip_code = zip_code;
     }
-
     dispatch({type: 'LOADING'});
     const result = await updateMembershipInfo(user.ut, updatedInfo);
     if (result?.success) {
@@ -147,6 +153,8 @@ const MembershipItem = () => {
           <input
             type='checkbox'
             value={editInfo}
+            id='editInfo'
+            name='editInfo'
             className='sr-only peer'
             onChange={HandleOnCLick}
           />
@@ -175,9 +183,10 @@ const MembershipItem = () => {
                 type='text'
                 name='address'
                 id='address'
-                disabled={editInfo ? false : true}
                 value={address}
+                disabled={editInfo ? false : true}
                 onChange={onChange}
+                autoComplete='off'
                 required
                 className={
                   editInfo
@@ -201,6 +210,7 @@ const MembershipItem = () => {
                 disabled={editInfo ? false : true}
                 required
                 onChange={onChange}
+                autoComplete='off'
                 className={
                   editInfo
                     ? 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
@@ -209,7 +219,46 @@ const MembershipItem = () => {
               />
             </div>
           </div>
-          <div className='grid gap-2 mb-2 md:grid-cols-2'>
+          <div className='grid gap-2 mb-2 md:grid-cols-3'>
+            <div className='relative z-0 w-full  group'>
+              <label
+                htmlFor='phone_number'
+                className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+              >
+                Phone number:
+              </label>
+              <div className='relative'>
+                <div className='absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none'>
+                  <svg
+                    className='w-4 h-4 text-gray-500 dark:text-gray-400'
+                    aria-hidden='true'
+                    xmlns='http://www.w3.org/2000/svg'
+                    fill='currentColor'
+                    viewBox='0 0 19 18'
+                  >
+                    <path d='M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z' />
+                  </svg>
+                </div>
+                <input
+                  type='tel'
+                  name='phone_number'
+                  id='phone_number'
+                  value={phone_number ? phone_number : ''}
+                  disabled={editInfo ? false : true}
+                  onChange={onChange}
+                  pattern='\(\d{3}\) \d{3}-\d{4}'
+                  placeholder='Format (123) 456-7890'
+                  autoComplete='off'
+                  className={
+                    editInfo
+                      ? 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                      : 'bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                  }
+                  required
+                />
+              </div>
+            </div>
+
             <div className='relative z-0 w-full group'>
               <label
                 htmlFor='state'
@@ -225,6 +274,7 @@ const MembershipItem = () => {
                 disabled={editInfo ? false : true}
                 required
                 onChange={onChange}
+                autoComplete='off'
                 className={
                   editInfo
                     ? 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
@@ -246,10 +296,11 @@ const MembershipItem = () => {
                 value={zip_code}
                 disabled={editInfo ? false : true}
                 onChange={onChange}
+                autoComplete='off'
                 required
                 className={
                   editInfo
-                    ? 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                    ? 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                     : 'bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
                 }
               />
@@ -265,6 +316,7 @@ const MembershipItem = () => {
                     id='is_same_address'
                     defaultChecked={is_same_address}
                     onChange={onChange}
+                    autoComplete='off'
                     type='checkbox'
                     className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
                   />
@@ -297,6 +349,7 @@ const MembershipItem = () => {
                       required
                       disabled={editInfo ? false : true}
                       value={spouse_address}
+                      autoComplete='off'
                       onChange={onChange}
                       className={
                         editInfo
@@ -319,6 +372,7 @@ const MembershipItem = () => {
                       required
                       value={spouse_city}
                       disabled={editInfo ? false : true}
+                      autoComplete='off'
                       onChange={onChange}
                       className={
                         editInfo
@@ -344,6 +398,7 @@ const MembershipItem = () => {
                       required
                       disabled={editInfo ? false : true}
                       value={spouse_state}
+                      autoComplete='off'
                       onChange={onChange}
                       className={
                         editInfo
@@ -366,6 +421,7 @@ const MembershipItem = () => {
                       id='spouse_zip_code'
                       value={spouse_zip_code}
                       disabled={editInfo ? false : true}
+                      autoComplete='off'
                       onChange={onChange}
                       className={
                         editInfo
