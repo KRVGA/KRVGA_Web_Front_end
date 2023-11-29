@@ -14,25 +14,33 @@ const Hero = () => {
             <h5 className='mb-2 text-4xl font-extrabold tracking-tight leading-none text-gray-900 '>
               About the Kern River Valley Gun Association
             </h5>
-            <p className='text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
+            <p className='text-base mb-2 text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
               The Kern River Valley Gun Association (KRVGA) operates on a non-
               discriminatory basis and under special use permit (SUP) from the
               Sequoia National Forest. Our 37-acre shooting range offers our
               members and visitors a place to enjoy rifle, pistol, trap and
               archery shooting. Our pistol range (pistol and pistol caliber
               rifles only) consists of 13 shooting bays with two wheelchair
-              accessible bays. The pistol range has an assortment of fixed
-              targets out to 50 yards and the ability to place paper targets at
-              any distance up to 100 yards. Our rifle range consist of 7
-              shooting benches and offers an assortment of steel targets out to
-              750 yards. Paper targets can be placed at 25, 50, 100, 150, and
-              200 yards. We have 1 amateur trap field available on the Sundays
-              we are open to the public (See the Calendar for most current
-              Public Shooting Days). Cost is only $5.00 per round. The Archery
-              range has various 3D and bag targets out to 80 yards. Annual
-              Memberships are $45 per calendar year. A Spouse Membership may be
-              purchased for an additional $20. Members may bring up to 3 guests
-              at a time for free. We DO NOT have guns for rent.
+              accessible bays.{' '}
+            </p>
+
+            <p className='text-base  mb-2 text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
+              The pistol range has an assortment of fixed targets out to 50
+              yards and the ability to place paper targets at any distance up to
+              100 yards. Our rifle range consist of 7 shooting benches and
+              offers an assortment of steel targets out to 750 yards. Paper
+              targets can be placed at 25, 50, 100, 150, and 200 yards.
+            </p>
+            <p className='text-base mb-2 text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
+              We have 1 amateur trap field available on the Sundays we are open
+              to the public (See the Calendar for most current Public Shooting
+              Days). Cost is only $5.00 per round. The Archery range has various
+              3D and bag targets out to 80 yards.
+            </p>
+            <p className='text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
+              Annual Memberships are $45 per calendar year. A Spouse Membership
+              may be purchased for an additional $20. Members may bring up to 3
+              guests at a time for free. We DO NOT have guns for rent.
             </p>
           </div>
         </section>
