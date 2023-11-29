@@ -10,7 +10,7 @@ const Hero = () => {
           alt='Logo'
         />
         <section className='bg-white dark:bg-gray-900'>
-          <div className='py-4 px-4 mx-auto max-w-screen-xl text-center '>
+          <div className='py-4 mx-auto max-w-screen-xl text-center '>
             <h5 className='mb-2 text-4xl font-extrabold tracking-tight leading-none text-gray-900 '>
               About the Kern River Valley Gun Association
             </h5>
