@@ -19,17 +19,20 @@ const Hero = () => {
               discriminatory basis and under special use permit (SUP) from the
               Sequoia National Forest. Our 37-acre shooting range offers our
               members and visitors a place to enjoy rifle, pistol, trap and
-              archery shooting. Our pistol range (pistol and pistol caliber
-              rifles only) consists of 13 shooting bays with two wheelchair
-              accessible bays.{' '}
+              archery shooting.
             </p>
 
             <p className='text-base  mb-2 text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
-              The pistol range has an assortment of fixed targets out to 50
-              yards and the ability to place paper targets at any distance up to
-              100 yards. Our rifle range consist of 7 shooting benches and
-              offers an assortment of steel targets out to 750 yards. Paper
-              targets can be placed at 25, 50, 100, 150, and 200 yards.
+              Our pistol range (pistol and pistol caliber rifles only) consists
+              of 13 shooting bays with two wheelchair accessible bays. The
+              pistol range has an assortment of fixed targets out to 50 yards
+              and the ability to place paper targets at any distance up to 100
+              yards.
+            </p>
+            <p className='text-base  mb-2 text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
+              Our rifle range consist of 7 shooting benches and offers an
+              assortment of steel targets out to 750 yards. Paper targets can be
+              placed at 25, 50, 100, 150, 200, 300, 400, 500, and 600 yards.
             </p>
             <p className='text-base mb-2 text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
               We have 1 amateur trap field available on the Sundays we are open
