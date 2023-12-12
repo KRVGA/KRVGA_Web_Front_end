@@ -618,7 +618,7 @@ const TermsModal = (props) => {
                   <div>
                     <label
                       htmlFor='nra_member_number'
-                      className='block mb-2 text-sm font-medium  dark:text-white  text-gray-600 dark:text-gray-300'
+                      className='block mb-2 text-sm font-medium  dark:text-white  text-gray-600'
                     >
                       NRA Membership #
                     </label>
@@ -742,7 +742,7 @@ const TermsModal = (props) => {
                     <div>
                       <label
                         htmlFor='spouse_nra_member_number'
-                        className='block mb-2 text-sm font-medium  dark:text-white  text-gray-600 dark:text-gray-300'
+                        className='block mb-2 text-sm font-medium  dark:text-white  text-gray-600 '
                       >
                         NRA Membership #
                       </label>

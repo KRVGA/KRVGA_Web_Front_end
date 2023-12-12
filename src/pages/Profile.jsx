@@ -50,6 +50,10 @@ const Profile = () => {
     });
   };
 
+  const handleRenew = (item) => {
+    console.log('clicked', item);
+  };
+
   const handleReportCLick = async () => {
     const response = await getCsvReport(user.ut);
     if (!response.success) {
@@ -231,9 +235,12 @@ const Profile = () => {
                               {getMembershipType(item)}
                             </th>
                             <td className='px-4 py-4 '>
-                              {new Date(item.renewal_date).getTime() <
+                              {new Date(item.renewal_date).getTime() >
                               Date.now() ? (
-                                <button className='px-3 py-2 text-xs font-medium text-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg '>
+                                <button
+                                  onClick={() => handleRenew(item)}
+                                  className='px-3 py-2 text-xs text-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg '
+                                >
                                   Renew
                                 </button>
                               ) : (
