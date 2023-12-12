@@ -1,7 +1,7 @@
 import IMAGES from '../Images/Images';
 const Hero = () => {
   return (
-    <section className='md:h-full mb-4'>
+    <section className='mb-4'>
       <div className='max-w-6xl mx-auto text-center px-10 pt-8'>
         <img
           className='rounded overflow-hidden shadow-xl dark:shadow-gray-300 mx-auto mb-2 mt-2 h-48 w-96 '
@@ -45,10 +45,10 @@ const Hero = () => {
               guests at a time for free. We DO NOT have guns for rent.
             </p>
           </div>
-          <h3 className='font-extrabold tracking-tight leading-none text-gray-900'>
+          <h3 className='mb-4 font-extrabold tracking-tight leading-none text-gray-900'>
             OFFICERS
           </h3>
-          <div className='grid m-4 grid-cols-2 md:grid-cols-3  gap-4 text-sm'>
+          <div className='grid  grid-cols-2 md:grid-cols-3  gap-4 text-sm'>
             <div className='flex flex-col'>
               <span className='text-base'>Jeff </span>
               <span className='text-base'>Evans</span>
