@@ -278,7 +278,7 @@ const Profile = () => {
                               {getMembershipType(item)}
                             </th>
                             <td className='px-4 py-4 '>
-                              {new Date(item.renewal_date).getTime() >
+                              {new Date(item.renewal_date).getTime() <
                               Date.now() ? (
                                 <button
                                   onClick={() => {
