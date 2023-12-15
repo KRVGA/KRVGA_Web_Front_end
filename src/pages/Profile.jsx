@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useState, useCallback} from 'react';
 import Context from '../context/Context';
 import {getCsvReport, getUserProfileInfo} from '../context/actions';
 import {exportToCSV} from '../utils/utils';
@@ -6,11 +6,15 @@ import {Spinner} from 'flowbite-react';
 import {dateToString, capitalizeWord, getMembershipType} from '../utils/utils';
 import {Link} from 'react-router-dom';
 import LifeMemberUpdate from '../components/LifeMemberUpdate';
+import TermsModal from '../components/TermsModal';
+import {requestPurchaseMembership} from '../context/actions';
 
 const Profile = () => {
   const {user, dispatch, isLoading, isError, message} = useContext(Context);
   const [showAlert, setShowAlert] = useState(false);
+  const [openModal, setOpenModal] = useState(null);
   const [userMembershps, setUserMemberships] = useState([]);
+  const [membership_type, setMembershipType] = useState({name: ''});
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -49,6 +53,49 @@ const Profile = () => {
       type: 'RESET_ALERTS',
     });
   };
+
+  const showTermsConfirm = useCallback(
+    (membership) => {
+      if (membership.is_membership_bundle) {
+        setMembershipType({name: 'bundle'});
+      }
+
+      setOpenModal({
+        async action(purchaseData) {
+          if (
+            purchaseData.is_membership_bundle &&
+            purchaseData.is_same_address
+          ) {
+            purchaseData.spouse_mail_address = purchaseData.mail_address;
+            purchaseData.spouse_city = purchaseData.city;
+            purchaseData.spouse_state = purchaseData.state;
+            purchaseData.spouse_zip_code = purchaseData.zip_code;
+          }
+          dispatch({type: 'LOADING'});
+          const result = await requestPurchaseMembership(purchaseData);
+
+          if (result?.success) {
+            setOpenModal(null);
+            dispatch({type: 'RESET'});
+            setShowAlert(false);
+
+            window.location.replace(`${result.url}`);
+          } else {
+            dispatch({
+              type: 'ERROR',
+              payload: 'Something Went Wrong, Try Again.',
+            });
+            setShowAlert(true);
+          }
+        },
+        onClose() {
+          setOpenModal(null);
+          dispatch({type: 'RESET_ALERTS'});
+        },
+      });
+    },
+    [setOpenModal, dispatch]
+  );
 
   const handleReportCLick = async () => {
     const response = await getCsvReport(user.ut);
@@ -231,9 +278,21 @@ const Profile = () => {
                               {getMembershipType(item)}
                             </th>
                             <td className='px-4 py-4 '>
-                              {new Date(item.renewal_date).getTime() <
+                              {new Date(item.renewal_date).getTime() >
                               Date.now() ? (
-                                <button className='px-3 py-2 text-xs font-medium text-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg '>
+                                <button
+                                  onClick={() => {
+                                    if (item.life_membership_qty === 1) {
+                                      dispatch({
+                                        type: 'RENEW_LIFE_MEMBERSHIP',
+                                        payload: true,
+                                      });
+                                    } else {
+                                      showTermsConfirm(item);
+                                    }
+                                  }}
+                                  className='px-3 py-2 text-xs text-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg '
+                                >
                                   Renew
                                 </button>
                               ) : (
@@ -259,6 +318,15 @@ const Profile = () => {
           </div>
         </>
       </div>
+      {openModal && (
+        <TermsModal
+          showAlert={showAlert}
+          setShowAlert={setShowAlert}
+          action={openModal.action}
+          onClose={openModal.onClose}
+          membership_type={membership_type}
+        />
+      )}
     </div>
   );
 };

@@ -4,7 +4,6 @@ import Context from '../context/Context';
 
 const TermsModal = (props) => {
   const {isError, message, isLoading, user} = useContext(Context);
-
   const [purchaseData, setPurchaseData] = useState({
     user_id: user?.id ? user.id : null,
     customer_email: user?.email ? user?.email : '',
@@ -44,7 +43,7 @@ const TermsModal = (props) => {
             {id: 1, quantity: 1},
             {id: 2, quantity: 1},
           ]
-        : [{id: props.membership_type.membership_id, quantity: 1}],
+        : [{id: 1, quantity: 1}],
   });
   const pronoun = props.membership_type.name === 'bundle' ? 'We' : 'I';
 
@@ -618,7 +617,7 @@ const TermsModal = (props) => {
                   <div>
                     <label
                       htmlFor='nra_member_number'
-                      className='block mb-2 text-sm font-medium  dark:text-white  text-gray-600 dark:text-gray-300'
+                      className='block mb-2 text-sm font-medium  dark:text-white  text-gray-600'
                     >
                       NRA Membership #
                     </label>
@@ -742,7 +741,7 @@ const TermsModal = (props) => {
                     <div>
                       <label
                         htmlFor='spouse_nra_member_number'
-                        className='block mb-2 text-sm font-medium  dark:text-white  text-gray-600 dark:text-gray-300'
+                        className='block mb-2 text-sm font-medium  dark:text-white  text-gray-600 '
                       >
                         NRA Membership #
                       </label>

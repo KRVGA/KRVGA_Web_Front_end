@@ -8,6 +8,7 @@ import {
   updateMembershipInfo,
 } from '../context/actions';
 import {getMembershipType} from '../utils/utils';
+import {dateToString} from '../utils/utils';
 
 const MembershipItem = () => {
   const {user, dispatch, isError, message} = useContext(Context);
@@ -25,7 +26,12 @@ const MembershipItem = () => {
     spouse_city: '',
     spouse_state: '',
     spouse_zip_code: '',
-    is_same_address: true,
+    is_same_address: false,
+    created_on: '',
+    nra_member: false,
+    spouse_nra_member: false,
+    nra_member_number: '',
+    spouse_nra_member_number: '',
   });
 
   const {
@@ -40,6 +46,11 @@ const MembershipItem = () => {
     spouse_state,
     spouse_zip_code,
     is_same_address,
+    created_on,
+    nra_member,
+    spouse_nra_member,
+    nra_member_number,
+    spouse_nra_member_number,
   } = updatedInfo;
   const [editInfo, setEditInfo] = useState(false);
 
@@ -85,6 +96,17 @@ const MembershipItem = () => {
       updatedInfo.spouse_city = city;
       updatedInfo.spouse_state = state;
       updatedInfo.spouse_zip_code = zip_code;
+    }
+
+    if (nra_member_number.length > 0) {
+      updatedInfo.nra_member = true;
+    } else {
+      updatedInfo.nra_member = false;
+    }
+    if (spouse_nra_member_number.length > 0) {
+      updatedInfo.spouse_nra_member = true;
+    } else {
+      updatedInfo.spouse_nra_member = false;
     }
     dispatch({type: 'LOADING'});
     const result = await updateMembershipInfo(user.ut, updatedInfo);
@@ -164,14 +186,14 @@ const MembershipItem = () => {
           </span>
         </label>
         <form onSubmit={handleSubmit}>
-          <p className='mb-4'>
+          <p>
             {full_name &&
               `${capitalizeWord(full_name)} - ${getMembershipType(
                 updatedInfo
-              )}`}{' '}
+              )}  `}{' '}
           </p>
-
-          <div className='grid gap-2 mb-2 md:grid-cols-2'>
+          <p className='mb-4'>{`Purchased on: ${dateToString(created_on)}`}</p>
+          <div className='grid gap-2 mb-2 md:grid-cols-3'>
             <div className='relative z-0 w-full group'>
               <label
                 htmlFor='address'
@@ -218,14 +240,60 @@ const MembershipItem = () => {
                 }
               />
             </div>
+            <div className='relative z-0 w-full group'>
+              <label
+                htmlFor='state'
+                className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+              >
+                State
+              </label>
+              <input
+                type='text'
+                name='state'
+                id='state'
+                value={state}
+                disabled={editInfo ? false : true}
+                required
+                onChange={onChange}
+                autoComplete='off'
+                className={
+                  editInfo
+                    ? 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                    : 'bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                }
+              />
+            </div>
           </div>
           <div className='grid gap-2 mb-2 md:grid-cols-3'>
             <div className='relative z-0 w-full  group'>
               <label
+                htmlFor='zip_code'
+                className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+              >
+                Zip Code
+              </label>
+              <input
+                type='text'
+                name='zip_code'
+                id='zip_code'
+                value={zip_code}
+                disabled={editInfo ? false : true}
+                onChange={onChange}
+                autoComplete='off'
+                required
+                className={
+                  editInfo
+                    ? 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                    : 'bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                }
+              />
+            </div>
+            <div className='relative z-0 w-full group'>
+              <label
                 htmlFor='phone_number'
                 className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
               >
-                Phone number:
+                Phone number
               </label>
               <div className='relative'>
                 <div className='absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none'>
@@ -258,46 +326,21 @@ const MembershipItem = () => {
                 />
               </div>
             </div>
-
-            <div className='relative z-0 w-full group'>
-              <label
-                htmlFor='state'
-                className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
-              >
-                State
-              </label>
-              <input
-                type='text'
-                name='state'
-                id='state'
-                value={state}
-                disabled={editInfo ? false : true}
-                required
-                onChange={onChange}
-                autoComplete='off'
-                className={
-                  editInfo
-                    ? 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                    : 'bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                }
-              />
-            </div>
             <div className='relative z-0 w-full  group'>
               <label
-                htmlFor='zip_code'
+                htmlFor='nra_member_number'
                 className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
               >
-                Zip Code
+                NRA Member Number
               </label>
               <input
                 type='text'
-                name='zip_code'
-                id='zip_code'
-                value={zip_code}
+                name='nra_member_number'
+                id='nra_member_number'
+                value={nra_member_number}
                 disabled={editInfo ? false : true}
                 onChange={onChange}
                 autoComplete='off'
-                required
                 className={
                   editInfo
                     ? 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
@@ -308,36 +351,13 @@ const MembershipItem = () => {
           </div>
           {updatedInfo.is_membership_bundle &&
             updatedInfo.spouse_membership_qty > 0 &&
-            editInfo && (
-              <>
-                <div className='relative z-0 w-full mb-6 group'>
-                  <input
-                    name='is_same_address'
-                    id='is_same_address'
-                    defaultChecked={is_same_address}
-                    onChange={onChange}
-                    autoComplete='off'
-                    type='checkbox'
-                    className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
-                  />
-                  <label
-                    htmlFor='is_same_address'
-                    className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
-                  >
-                    Check if same address for spouse member
-                  </label>
-                </div>
-              </>
-            )}
-          {updatedInfo.is_membership_bundle &&
-            updatedInfo.spouse_membership_qty > 0 &&
             !is_same_address && (
-              <div className='mb-2'>
-                <p className='mb-4'>Spouse Member Address</p>
+              <div className='mt-4 '>
+                <p>Spouse Member Address</p>
                 <div className='grid gap-2 mb-2 md:grid-cols-2'>
                   <div className='relative z-0 w-full group'>
                     <label
-                      htmlFor='address'
+                      htmlFor='spouse_address'
                       className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                     >
                       Spouse Mailing Address
@@ -360,7 +380,7 @@ const MembershipItem = () => {
                   </div>
                   <div className='relative z-0 w-full group'>
                     <label
-                      htmlFor='city'
+                      htmlFor='spouse_city'
                       className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                     >
                       Spouse City
@@ -383,10 +403,10 @@ const MembershipItem = () => {
                   </div>
                 </div>
 
-                <div className='grid gap-2 mb-2 md:grid-cols-2'>
+                <div className='grid gap-2 mb-2 md:grid-cols-3'>
                   <div className='relative z-0 w-full group'>
                     <label
-                      htmlFor='address'
+                      htmlFor='spouse_state'
                       className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                     >
                       Spouse State
@@ -409,7 +429,7 @@ const MembershipItem = () => {
                   </div>
                   <div className='relative z-0 w-full group'>
                     <label
-                      htmlFor='city'
+                      htmlFor='spouse_zip_code'
                       className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
                     >
                       Spouse Zip Code
@@ -426,6 +446,28 @@ const MembershipItem = () => {
                       className={
                         editInfo
                           ? 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                          : 'bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                      }
+                    />
+                  </div>
+                  <div className='relative z-0 w-full  group'>
+                    <label
+                      htmlFor='spouse_nra_member_number'
+                      className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                    >
+                      NRA Member Number
+                    </label>
+                    <input
+                      type='text'
+                      name='spouse_nra_member_number'
+                      id='spouse_nra_member_number'
+                      value={spouse_nra_member_number}
+                      disabled={editInfo ? false : true}
+                      onChange={onChange}
+                      autoComplete='off'
+                      className={
+                        editInfo
+                          ? 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                           : 'bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
                       }
                     />
