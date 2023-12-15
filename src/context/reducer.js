@@ -34,6 +34,17 @@ const reducer = (state, action) => {
         isError: false,
         message: '',
       };
+    case 'RENEW_LIFE_MEMBERSHIP':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          life_member_update: action.payload,
+        },
+        isLoading: false,
+        isError: false,
+        message: '',
+      };
     case 'USER_LOGOUT':
       return {
         user: null,

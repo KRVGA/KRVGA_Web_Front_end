@@ -4,7 +4,6 @@ import Context from '../context/Context';
 
 const TermsModal = (props) => {
   const {isError, message, isLoading, user} = useContext(Context);
-
   const [purchaseData, setPurchaseData] = useState({
     user_id: user?.id ? user.id : null,
     customer_email: user?.email ? user?.email : '',
@@ -44,7 +43,7 @@ const TermsModal = (props) => {
             {id: 1, quantity: 1},
             {id: 2, quantity: 1},
           ]
-        : [{id: props.membership_type.membership_id, quantity: 1}],
+        : [{id: 1, quantity: 1}],
   });
   const pronoun = props.membership_type.name === 'bundle' ? 'We' : 'I';
 

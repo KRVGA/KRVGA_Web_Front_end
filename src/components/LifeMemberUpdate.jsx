@@ -665,7 +665,7 @@ const LifeMemberUpdate = ({setShowAlert}) => {
                 <div>
                   <label
                     htmlFor='nra_member_number'
-                    className='block mb-2 text-sm font-medium  dark:text-white  text-gray-600 dark:text-gray-300'
+                    className='block mb-2 text-sm font-medium  dark:text-white  text-gray-600 '
                   >
                     NRA Membership #
                   </label>
@@ -789,7 +789,7 @@ const LifeMemberUpdate = ({setShowAlert}) => {
                   <div>
                     <label
                       htmlFor='spouse_nra_member_number'
-                      className='block mb-2 text-sm font-medium  dark:text-white  text-gray-600 dark:text-gray-300'
+                      className='block mb-2 text-sm font-medium  dark:text-white  text-gray-600'
                     >
                       NRA Membership #
                     </label>
@@ -900,6 +900,17 @@ const LifeMemberUpdate = ({setShowAlert}) => {
                     }
                   >
                     Proceed
+                  </button>
+                  <button
+                    className='inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
+                    onClick={() => {
+                      dispatch({
+                        type: 'RENEW_LIFE_MEMBERSHIP',
+                        payload: false,
+                      });
+                    }}
+                  >
+                    Back
                   </button>
                 </>
               )}

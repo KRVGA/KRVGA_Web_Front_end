@@ -22,7 +22,6 @@ const MembershipCard = ({membership_type, setMembershipSelected}) => {
           purchaseData.spouse_state = purchaseData.state;
           purchaseData.spouse_zip_code = purchaseData.zip_code;
         }
-
         dispatch({type: 'LOADING'});
         const result = await requestPurchaseMembership(purchaseData);
 
