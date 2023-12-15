@@ -45,9 +45,10 @@ const Hero = () => {
               guests at a time for free. We DO NOT have guns for rent.
             </p>
           </div>
-          <h3 className='font-extrabold tracking-tight leading-none text-gray-900'>
+          <h3 className='mb-4 font-extrabold tracking-tight leading-none text-gray-900'>
             OFFICERS
           </h3>
+
           <div className='grid grid-cols-2 md:grid-cols-3  gap-4 text-sm'>
             <div className='flex flex-col'>
               <span className='text-base'>Jeff </span>
