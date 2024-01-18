@@ -9,17 +9,15 @@ const ChangePwd = () => {
   const {isError, message, isLoading, dispatch} = useContext(Context);
   const [showAlert, setShowAlert] = useState(false);
   const [userData, setUserData] = useState({
-    previous_password: '',
     new_password: '',
     repeat_new_pwd: '',
   });
 
-  const {previous_password, new_password, repeat_new_pwd} = userData;
+  const {new_password, repeat_new_pwd} = userData;
   const onSubmit = async (e) => {
     e.preventDefault();
     dispatch({type: 'LOADING'});
     const userDataObject = {
-      previous_password,
       new_password,
       repeat_new_pwd,
       tokenString,
@@ -79,18 +77,6 @@ const ChangePwd = () => {
           onSubmit={onSubmit}
           className='flex flex-col items-center mx-8 my-4 rounded-xl'
         >
-          <div className='mb-6 '>
-            <input
-              type='password'
-              id='previous_password'
-              name='previous_password'
-              value={previous_password}
-              onChange={onChange}
-              className='w-[12rem] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-              placeholder='Previous Password'
-              required
-            />
-          </div>
           <div className='mb-6'>
             <input
               type='password'
@@ -99,7 +85,7 @@ const ChangePwd = () => {
               value={new_password}
               onChange={onChange}
               placeholder='New Password'
-              className=' w-[12rem] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+              className=' bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               required
             />
           </div>
@@ -111,7 +97,7 @@ const ChangePwd = () => {
               value={repeat_new_pwd}
               onChange={onChange}
               placeholder='Repeat New Password'
-              className=' w-[12rem] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+              className='  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               required
             />
           </div>
@@ -138,7 +124,7 @@ const ChangePwd = () => {
               )}
             </button>
             {!isError && message && (
-              <p className='block sm:inline'>{`${message}`}</p>
+              <p className='block sm:inline p-2 text-red-500'>{message} </p>
             )}
             {isError && showAlert && (
               <div

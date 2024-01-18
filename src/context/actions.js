@@ -263,7 +263,6 @@ export const resetPwd = async (email) => {
 };
 
 export const updatePassword = async ({
-  previous_password,
   new_password,
   repeat_new_pwd,
   tokenString,
@@ -275,14 +274,12 @@ export const updatePassword = async ({
         headers: {'Content-type': 'application/json'},
         method: 'PUT',
         body: JSON.stringify({
-          currentPassword: previous_password,
           newPassword: new_password,
           repeatNewPassword: repeat_new_pwd,
         }),
       }
     );
     const result = await response.json();
-
     return result;
   } catch (error) {
     const errorMessage =
