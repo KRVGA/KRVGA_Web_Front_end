@@ -1,7 +1,6 @@
 import {useContext, useEffect, useState, useCallback} from 'react';
 import Context from '../context/Context';
-import {getCsvReport, getUserProfileInfo} from '../context/actions';
-import {exportToCSV} from '../utils/utils';
+import {getUserProfileInfo} from '../context/actions';
 import {Spinner} from 'flowbite-react';
 import {dateToString, capitalizeWord, getMembershipType} from '../utils/utils';
 import {Link} from 'react-router-dom';
@@ -16,7 +15,7 @@ const Profile = () => {
   const [userMembershps, setUserMemberships] = useState([]);
   const [membership_type, setMembershipType] = useState({name: ''});
 
-  useEffect(() => {
+  const membershipExpired = useEffect(() => {
     const getUserInfo = async () => {
       dispatch({type: 'LOADING'});
       const result = await getUserProfileInfo(user.ut);
@@ -96,19 +95,6 @@ const Profile = () => {
     },
     [setOpenModal, dispatch]
   );
-
-  const handleReportCLick = async () => {
-    const response = await getCsvReport(user.ut);
-    if (!response.success) {
-      dispatch({
-        type: 'ERROR',
-        payload: response.message ? response.message : 'Something Went Wrong.',
-      });
-      setShowAlert(true);
-    } else {
-      exportToCSV(response.report, 'mebership report');
-    }
-  };
 
   if (isLoading) {
     return (
@@ -196,23 +182,6 @@ const Profile = () => {
                   <span className='bg-blue-100 text-blue-800 text-center text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300'>
                     Administrator
                   </span>
-                  <button
-                    type='button'
-                    onClick={handleReportCLick}
-                    className='px-2 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-                  >
-                    {isLoading ? (
-                      <>
-                        <Spinner
-                          aria-label='Loading...'
-                          size='sm'
-                        />
-                        <span className='pl-3'>Loading...</span>
-                      </>
-                    ) : (
-                      <span> Get Report </span>
-                    )}
-                  </button>
                 </>
               )}
             </div>
@@ -266,6 +235,8 @@ const Profile = () => {
                     </thead>
                     <tbody>
                       {user?.membership_info?.map((item) => {
+                        const renewalDue =
+                          new Date(item.renewal_date).getTime() < Date.now();
                         return (
                           <tr
                             key={item.membership_purchase_id}
@@ -278,8 +249,7 @@ const Profile = () => {
                               {getMembershipType(item)}
                             </th>
                             <td className='px-4 py-4 '>
-                              {new Date(item.renewal_date).getTime() <
-                              Date.now() ? (
+                              {renewalDue ? (
                                 <button
                                   onClick={() => {
                                     if (item.life_membership_qty === 1) {
@@ -301,8 +271,16 @@ const Profile = () => {
                             </td>
                             <td className='px-4 py-4 '>
                               <Link
-                                to={`/details/${item.membership_purchase_id}`}
-                                className=' text-xs font-medium text-blue-600 dark:text-blue-500 hover:underline'
+                                to={
+                                  renewalDue
+                                    ? '#'
+                                    : `/details/${item.membership_purchase_id}`
+                                }
+                                className={
+                                  renewalDue
+                                    ? 'disabled cursor-not-allowed'
+                                    : 'text-xs font-medium text-blue-600 dark:text-blue-500 hover:underline'
+                                }
                               >
                                 Edit + Details
                               </Link>

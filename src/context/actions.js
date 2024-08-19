@@ -220,28 +220,6 @@ export const downloadPaperApp = async () => {
   }
 };
 
-export const getCsvReport = async (token) => {
-  try {
-    const response = await fetch(`${BASE_URL}/user/admin/report`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    const errorMessage =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-
-    return {error: errorMessage ? errorMessage : 'Something went wrong.'};
-  }
-};
-
 export const resetPwd = async (email) => {
   email = email.toLowerCase();
   try {
