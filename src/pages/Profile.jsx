@@ -15,7 +15,7 @@ const Profile = () => {
   const [userMembershps, setUserMemberships] = useState([]);
   const [membership_type, setMembershipType] = useState({name: ''});
 
-  const membershipExpired = useEffect(() => {
+  useEffect(() => {
     const getUserInfo = async () => {
       dispatch({type: 'LOADING'});
       const result = await getUserProfileInfo(user.ut);
@@ -236,7 +236,7 @@ const Profile = () => {
                     <tbody>
                       {user?.membership_info?.map((item) => {
                         const renewalDue =
-                          new Date(item.renewal_date).getTime() < Date.now();
+                          new Date(item.renewal_date).getTime() > Date.now();
                         return (
                           <tr
                             key={item.membership_purchase_id}
