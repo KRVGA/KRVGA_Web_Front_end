@@ -14,7 +14,8 @@ const Profile = () => {
   const [openModal, setOpenModal] = useState(null);
   const [userMembershps, setUserMemberships] = useState([]);
   const [membership_type, setMembershipType] = useState({name: ''});
-
+  const currentDate = new Date();
+  const lastDayOfSeptember = new Date(currentDate.getFullYear(), 8, 30);
   useEffect(() => {
     const getUserInfo = async () => {
       dispatch({type: 'LOADING'});
@@ -210,45 +211,53 @@ const Profile = () => {
                 </div>
               ) : (
                 <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
-                  <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
-                    <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+                  <table className='w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400'>
+                    <thead className='text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
                       <tr>
                         <th
                           scope='col'
-                          className=' px-6 py-3'
+                          className='px-1 py-3 '
                         >
-                          Membership Type
+                          Type
                         </th>
                         <th
                           scope='col'
-                          className='px-6 py-3 '
+                          className='px-1 py-3 '
                         >
-                          Renewal Date
+                          Expiration
                         </th>
                         <th
                           scope='col'
-                          className='px-6 py-3 '
+                          className='px-1 py-3 '
                         >
-                          <span className='sr-only'>Details</span>
+                          <span className='sr-only'>Details </span>
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       {user?.membership_info?.map((item) => {
                         const renewalDue =
-                          new Date(item.renewal_date).getTime() < Date.now();
+                          currentDate >
+                            new Date(item.expiration_date).getTime() ||
+                          currentDate > lastDayOfSeptember;
                         return (
                           <tr
                             key={item.membership_purchase_id}
                             className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'
                           >
-                            <th
+                            <td
                               scope='row'
-                              className='px-4 py-4 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white '
+                              className='flex flex-col px-2 py-4 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white '
                             >
                               {getMembershipType(item)}
-                            </th>
-                            <td className='px-4 py-4 '>
+                            </td>
+                            <td
+                              scope='row'
+                              className=' text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white '
+                            >
+                              {dateToString(item.expiration_date)}
+                            </td>
+                            <td>
                               {renewalDue ? (
                                 <button
                                   onClick={() => {
@@ -261,29 +270,28 @@ const Profile = () => {
                                       showTermsConfirm(item);
                                     }
                                   }}
-                                  className='px-3 py-2 text-xs text-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg '
+                                  className='px-2 py-2 text-xs text-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg '
                                 >
-                                  Renew
+                                  {currentDate > lastDayOfSeptember
+                                    ? 'Early Renew'
+                                    : 'Renew'}
                                 </button>
                               ) : (
-                                dateToString(item.renewal_date)
+                                <Link
+                                  to={
+                                    renewalDue
+                                      ? '#'
+                                      : `/details/${item.membership_purchase_id}`
+                                  }
+                                  className={
+                                    renewalDue
+                                      ? ' text-xs disabled cursor-not-allowed'
+                                      : ' text-xs font-medium text-blue-600 dark:text-blue-500 hover:underline'
+                                  }
+                                >
+                                  Edit + Details
+                                </Link>
                               )}
-                            </td>
-                            <td className='px-4 py-4 '>
-                              <Link
-                                to={
-                                  renewalDue
-                                    ? '#'
-                                    : `/details/${item.membership_purchase_id}`
-                                }
-                                className={
-                                  renewalDue
-                                    ? 'disabled cursor-not-allowed'
-                                    : 'text-xs font-medium text-blue-600 dark:text-blue-500 hover:underline'
-                                }
-                              >
-                                Edit + Details
-                              </Link>
                             </td>
                           </tr>
                         );
