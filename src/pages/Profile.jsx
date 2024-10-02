@@ -13,6 +13,7 @@ const Profile = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [openModal, setOpenModal] = useState(null);
   const [membership_type, setMembershipType] = useState({name: ''});
+  const [userMembershps, setUserMemberships] = useState({});
 
   const currentDate = new Date();
   const lastDayOfSeptember = new Date(currentDate.getFullYear(), 8, 30);
@@ -28,7 +29,11 @@ const Profile = () => {
     const getUserInfo = async () => {
       dispatch({type: 'LOADING'});
       const result = await getUserProfileInfo(user.ut);
-
+      setUserMemberships({
+        annual_membership_qty:
+          result.user.membership_info.annual_membership_qty,
+        life_membership_qty: result.user.membership_info.life_membership_qty,
+      });
       if (result.success) {
         dispatch({type: 'USER_PROFILE', payload: result.user});
       }
@@ -191,9 +196,9 @@ const Profile = () => {
           <div>
             {
               /* Users with no membership  */
-              !user.membership_info?.annual_membership_qty &&
-              !user.membership_info?.life_membership_qty &&
-              !user?.life_member_update ? (
+              userMembershps?.annual_membership_qty < 1 &&
+              userMembershps?.life_membership_qty < 1 &&
+              !user.life_member_update ? (
                 <div className='flex flex-col'>
                   <p className='text-center'>
                     If you have a life membership please come back later to
@@ -236,21 +241,20 @@ const Profile = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        key={user.membership_info.membership_purchase_id}
-                        className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'
-                      >
+                      <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
                         <td
                           scope='row'
                           className='flex flex-col px-2 py-4 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white '
                         >
-                          {getMembershipType(user.membership_info)}
+                          {user?.membership_info &&
+                            getMembershipType(user.membership_info)}
                         </td>
                         <td
                           scope='row'
                           className=' text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white '
                         >
-                          {dateToString(user.membership_info.expiration_date)}
+                          {user?.membership_info &&
+                            dateToString(user.membership_info.expiration_date)}
                         </td>
                         <td>
                           {(earlyRenew && !renewalDue) ||
