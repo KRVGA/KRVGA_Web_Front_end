@@ -7,16 +7,36 @@ const TermsModal = (props) => {
   const [purchaseData, setPurchaseData] = useState({
     user_id: user?.id ? user.id : null,
     customer_email: user?.email ? user?.email : '',
-    full_name: '',
-    mail_address: '',
-    phone_number: '',
-    city: '',
-    state: '',
-    zip_code: '',
-    spouse_email: '',
-    spouse_full_name: '',
+    full_name: user?.membership_info?.full_name
+      ? user.membership_info.full_name
+      : '',
+    mail_address: user?.membership_info?.address
+      ? user.membership_info.address
+      : '',
+    phone_number: user?.membership_info?.phone_number
+      ? user.membership_info.phone_number
+      : '',
+    city: user?.membership_info?.city ? user.membership_info.city : '',
+    state: user?.membership_info?.state ? user.membership_info.state : '',
+    zip_code: user?.membership_info?.zip_code
+      ? user.membership_info.zip_code
+      : '',
+    spouse_email:
+      user?.membership_info?.is_membership_bundle &&
+      user?.membership_info?.spouse_email
+        ? user.membership_info.spouse_email
+        : '',
+    spouse_full_name:
+      user?.membership_info?.is_membership_bundle &&
+      user?.membership_info?.spouse_full_name
+        ? user.membership_info.spouse_full_name
+        : '',
     spouse_mail_address: '',
-    spouse_phone_number: '',
+    spouse_phone_number:
+      user?.membership_info?.is_membership_bundle &&
+      user?.membership_info?.spouse_phone_number
+        ? user.membership_info.spouse_phone_number
+        : '',
     spouse_city: '',
     spouse_state: '',
     spouse_zip_code: '',
