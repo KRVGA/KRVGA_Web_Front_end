@@ -106,7 +106,7 @@ const reducer = (state, action) => {
         },
         isError: false,
         isLoading: false,
-        message: action.payload,
+        message: action.payload.message,
         success: true,
       };
     case 'UPDATE_SUCCESS':

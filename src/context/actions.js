@@ -159,7 +159,7 @@ export const register = async (userData) => {
           ut: result.token,
           id: result.id,
           email: result.email,
-          membership_info: [],
+          membership_info: {},
         })
       );
     }
@@ -191,7 +191,7 @@ export const logIn = async (userData) => {
           ut: result.token,
           id: result.id,
           email: result.email,
-          membership_info: [],
+          membership_info: {},
         })
       );
     }

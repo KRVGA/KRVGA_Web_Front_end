@@ -12,17 +12,24 @@ const Profile = () => {
   const {user, dispatch, isLoading, isError, message} = useContext(Context);
   const [showAlert, setShowAlert] = useState(false);
   const [openModal, setOpenModal] = useState(null);
-  const [userMembershps, setUserMemberships] = useState([]);
   const [membership_type, setMembershipType] = useState({name: ''});
+
   const currentDate = new Date();
   const lastDayOfSeptember = new Date(currentDate.getFullYear(), 8, 30);
+  const lastDayOfDecember = new Date(currentDate.getFullYear(), 12);
+
+  const renewalDue =
+    new Date(user?.membership_info?.expiration_date).getTime() >
+    lastDayOfDecember.getTime();
+
+  const earlyRenew = currentDate.getTime() > lastDayOfSeptember.getTime();
+
   useEffect(() => {
     const getUserInfo = async () => {
       dispatch({type: 'LOADING'});
       const result = await getUserProfileInfo(user.ut);
 
       if (result.success) {
-        setUserMemberships(result.user.membership_info);
         dispatch({type: 'USER_PROFILE', payload: result.user});
       }
       if (!result.success) {
@@ -40,12 +47,6 @@ const Profile = () => {
     };
     getUserInfo();
   }, [user.ut, dispatch]);
-
-  useEffect(() => {
-    if (user.life_member_update === false) {
-      setUserMemberships(user.membership_info);
-    }
-  }, [user.life_member_update, user.membership_info]);
 
   const handleClick = () => {
     setShowAlert((prev) => !prev);
@@ -190,8 +191,8 @@ const Profile = () => {
           <div>
             {
               /* Users with no membership  */
-              !userMembershps[0]?.annual_membership_qty &&
-              !userMembershps[0]?.life_membership_qty &&
+              !user.membership_info?.annual_membership_qty &&
+              !user.membership_info?.life_membership_qty &&
               !user?.life_member_update ? (
                 <div className='flex flex-col'>
                   <p className='text-center'>
@@ -235,67 +236,64 @@ const Profile = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {user?.membership_info?.map((item) => {
-                        const renewalDue =
-                          currentDate >
-                            new Date(item.expiration_date).getTime() ||
-                          currentDate > lastDayOfSeptember;
-                        return (
-                          <tr
-                            key={item.membership_purchase_id}
-                            className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'
-                          >
-                            <td
-                              scope='row'
-                              className='flex flex-col px-2 py-4 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white '
+                      <tr
+                        key={user.membership_info.membership_purchase_id}
+                        className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'
+                      >
+                        <td
+                          scope='row'
+                          className='flex flex-col px-2 py-4 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white '
+                        >
+                          {getMembershipType(user.membership_info)}
+                        </td>
+                        <td
+                          scope='row'
+                          className=' text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white '
+                        >
+                          {dateToString(user.membership_info.expiration_date)}
+                        </td>
+                        <td>
+                          {(earlyRenew && !renewalDue) ||
+                          (!earlyRenew && renewalDue) ? (
+                            <button
+                              onClick={() => {
+                                if (
+                                  user.membership_info.life_membership_qty === 1
+                                ) {
+                                  dispatch({
+                                    type: 'RENEW_LIFE_MEMBERSHIP',
+                                    payload: true,
+                                  });
+                                } else {
+                                  showTermsConfirm(user.membership_info);
+                                }
+                              }}
+                              className='px-2 py-2 text-xs text-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg '
                             >
-                              {getMembershipType(item)}
-                            </td>
-                            <td
-                              scope='row'
-                              className=' text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white '
+                              {currentDate > lastDayOfSeptember
+                                ? 'Early Renew'
+                                : 'Renew'}
+                            </button>
+                          ) : (
+                            <Link
+                              to={
+                                (earlyRenew && !renewalDue) ||
+                                (!earlyRenew && renewalDue)
+                                  ? '#'
+                                  : `/details/${user.membership_info.membership_purchase_id}`
+                              }
+                              className={
+                                (earlyRenew && !renewalDue) ||
+                                (!earlyRenew && renewalDue)
+                                  ? ' text-xs disabled cursor-not-allowed'
+                                  : ' text-xs font-medium text-blue-600 dark:text-blue-500 hover:underline'
+                              }
                             >
-                              {dateToString(item.expiration_date)}
-                            </td>
-                            <td>
-                              {renewalDue ? (
-                                <button
-                                  onClick={() => {
-                                    if (item.life_membership_qty === 1) {
-                                      dispatch({
-                                        type: 'RENEW_LIFE_MEMBERSHIP',
-                                        payload: true,
-                                      });
-                                    } else {
-                                      showTermsConfirm(item);
-                                    }
-                                  }}
-                                  className='px-2 py-2 text-xs text-center text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg '
-                                >
-                                  {currentDate > lastDayOfSeptember
-                                    ? 'Early Renew'
-                                    : 'Renew'}
-                                </button>
-                              ) : (
-                                <Link
-                                  to={
-                                    renewalDue
-                                      ? '#'
-                                      : `/details/${item.membership_purchase_id}`
-                                  }
-                                  className={
-                                    renewalDue
-                                      ? ' text-xs disabled cursor-not-allowed'
-                                      : ' text-xs font-medium text-blue-600 dark:text-blue-500 hover:underline'
-                                  }
-                                >
-                                  Edit + Details
-                                </Link>
-                              )}
-                            </td>
-                          </tr>
-                        );
-                      })}
+                              Edit + Details
+                            </Link>
+                          )}
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
