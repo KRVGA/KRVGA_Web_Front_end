@@ -41,7 +41,7 @@ const ChangePwd = () => {
       }
       if (result.success) {
         dispatch({
-          type: 'SUCCESS',
+          type: 'UPDATE_SUCCESS',
           payload: result.message,
         });
         setTimeout(() => {

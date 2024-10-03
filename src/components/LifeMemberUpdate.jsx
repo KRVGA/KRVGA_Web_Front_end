@@ -162,7 +162,7 @@ const LifeMemberUpdate = ({setShowAlert}) => {
     dispatch({type: 'LOADING'});
     const result = await processLifeMemberUpdate(user.ut, purchaseData);
     if (result.success && !result.url && !result.session_id) {
-      dispatch({type: 'SUCCESS', payload: result});
+      dispatch({type: 'UPDATE_LIFE_SUCCESS', payload: result});
     } else if (result.url && result.session_id) {
       window.location.replace(`${result.url}`);
     } else {
