@@ -161,6 +161,7 @@ const LifeMemberUpdate = ({setShowAlert}) => {
 
     dispatch({type: 'LOADING'});
     const result = await processLifeMemberUpdate(user.ut, purchaseData);
+    console.log('life update', result);
     if (result.success && !result.url && !result.session_id) {
       dispatch({type: 'UPDATE_LIFE_SUCCESS', payload: result});
     } else if (result.url && result.session_id) {
