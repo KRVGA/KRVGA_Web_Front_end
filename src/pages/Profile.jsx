@@ -96,7 +96,7 @@ const Profile = () => {
     },
     [setOpenModal, dispatch]
   );
-  console.log(user);
+  
   if (isLoading) {
     return (
       <div className='flex items-center justify-center min-h-height  membership-purchase h-full'>
