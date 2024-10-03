@@ -96,7 +96,7 @@ const reducer = (state, action) => {
         isLoading: false,
         message: action.payload,
       };
-    case 'SUCCESS':
+    case 'UPDATE_LIFE_SUCCESS':
       return {
         ...state,
         user: {

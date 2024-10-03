@@ -13,7 +13,6 @@ const Profile = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [openModal, setOpenModal] = useState(null);
   const [membership_type, setMembershipType] = useState({name: ''});
-  const [userMembershps, setUserMemberships] = useState({});
 
   const currentDate = new Date();
   const lastDayOfSeptember = new Date(currentDate.getFullYear(), 8, 30);
@@ -29,11 +28,6 @@ const Profile = () => {
     const getUserInfo = async () => {
       dispatch({type: 'LOADING'});
       const result = await getUserProfileInfo(user.ut);
-      setUserMemberships({
-        annual_membership_qty:
-          result.user.membership_info.annual_membership_qty,
-        life_membership_qty: result.user.membership_info.life_membership_qty,
-      });
       if (result.success) {
         dispatch({type: 'USER_PROFILE', payload: result.user});
       }
@@ -196,8 +190,8 @@ const Profile = () => {
           <div>
             {
               /* Users with no membership  */
-              userMembershps?.annual_membership_qty < 1 &&
-              userMembershps?.life_membership_qty < 1 &&
+              user.membership_info?.annual_membership_qty < 1 &&
+              user.membership_info?.life_membership_qty < 1 &&
               !user.life_member_update ? (
                 <div className='flex flex-col'>
                   <p className='text-center'>
