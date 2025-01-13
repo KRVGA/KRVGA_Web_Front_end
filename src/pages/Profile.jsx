@@ -96,7 +96,7 @@ const Profile = () => {
     },
     [setOpenModal, dispatch]
   );
-  
+
   if (isLoading) {
     return (
       <div className='flex items-center justify-center min-h-height  membership-purchase h-full'>
@@ -241,14 +241,16 @@ const Profile = () => {
                           className='flex flex-col px-2 py-4 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white '
                         >
                           {user?.membership_info &&
-                            getMembershipType(user.membership_info)}
+                            getMembershipType(user?.membership_info)}
                         </td>
                         <td
                           scope='row'
                           className=' text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white '
                         >
                           {user?.membership_info &&
-                            dateToString(user.membership_info.expiration_date)}
+                            dateToString(
+                              user?.membership_info?.expiration_date
+                            )}
                         </td>
                         <td>
                           {(earlyRenew && !renewalDue) ||
@@ -256,7 +258,8 @@ const Profile = () => {
                             <button
                               onClick={() => {
                                 if (
-                                  user.membership_info.life_membership_qty === 1
+                                  user?.membership_info?.life_membership_qty ===
+                                  1
                                 ) {
                                   dispatch({
                                     type: 'RENEW_LIFE_MEMBERSHIP',
@@ -278,7 +281,7 @@ const Profile = () => {
                                 (earlyRenew && !renewalDue) ||
                                 (!earlyRenew && renewalDue)
                                   ? '#'
-                                  : `/details/${user.membership_info.membership_purchase_id}`
+                                  : `/details/${user?.membership_info?.membership_purchase_id}`
                               }
                               className={
                                 (earlyRenew && !renewalDue) ||
