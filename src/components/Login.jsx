@@ -107,11 +107,8 @@ const Login = () => {
           <div className='flex flex-col gap-2 items-center mb-2'>
             <button
               type='submit'
-              disabled={isError && showAlert}
               className={
-                isError
-                  ? 'inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg opacity-25 cursor-not-allowed'
-                  : 'inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
+                'inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
               }
             >
               {isLoading ? (
