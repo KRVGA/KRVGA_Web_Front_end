@@ -1,4 +1,4 @@
-const BASE_URL = 'https://krvga-7efc9d7c87af.herokuapp.com/api';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const fetchMembershipTypes = async () => {
   try {
