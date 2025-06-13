@@ -112,8 +112,8 @@ const Hero = () => {
               <span className='font-light'>Range Executive Officer</span>
             </div>
             <div className='flex flex-col '>
-              <span className='text-base'>Gabe </span>
-              <span className='text-base'>Szalay</span>
+              <span className='text-base'>Art </span>
+              <span className='text-base'>Jacklin</span>
               <span className='font-light'>Range Maintenance Officer</span>
             </div>
             <div className='flex flex-col col-span-2 md:col-span-3'>
