@@ -1,5 +1,20 @@
+import {useState, useEffect} from 'react';
+import {fetchWeather} from '../context/actions';
 import IMAGES from '../Images/Images';
+import WeatherWidget from './WeatherWidget';
+
 const Hero = () => {
+  const [showWeather, setShowWeather] = useState(false);
+  const [weather, setWeather] = useState(null);
+
+  useEffect(() => {
+    fetchWeather().then((data) => {
+      if (!data.error) {
+        setWeather(data);
+      }
+    });
+  }, []);
+
   return (
     <section className='mb-4'>
       <div className='max-w-6xl mx-auto text-center px-10 pt-8'>
@@ -8,6 +23,26 @@ const Hero = () => {
           src={IMAGES.frontHero}
           alt='Logo'
         />
+
+        {weather && (
+          <div
+            onClick={() => setShowWeather(true)}
+            className='mt-4 inline-flex items-center justify-between px-4 py-2 bg-gray-900 text-white rounded-full text-sm shadow cursor-pointer'
+          >
+            <span>{weather.tempf}&deg;F</span>
+            <span className='ml-2 text-xs text-blue-300'>
+              (tap for details)
+            </span>
+          </div>
+        )}
+
+        {/* Weather Overlay Drawer */}
+        {showWeather && (
+          <WeatherWidget
+            weather={weather}
+            setShowWeather={setShowWeather}
+          />
+        )}
         <section>
           <div className='py-4 mb-2 mx-auto max-w-screen-xl text-center '>
             <h5 className='mb-2 text-4xl font-extrabold tracking-tight leading-none text-gray-900 '>

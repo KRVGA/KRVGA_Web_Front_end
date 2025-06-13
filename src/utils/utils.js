@@ -77,3 +77,8 @@ const convertArrayToCSV = (array) => {
   const rows = array.map((obj) => Object.values(obj).join(','));
   return [header, ...rows].join('\n');
 };
+
+export function getCompassDirection(deg) {
+  const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  return dirs[Math.round(deg / 45) % 8];
+}

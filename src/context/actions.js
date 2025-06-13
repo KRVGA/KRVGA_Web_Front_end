@@ -1,5 +1,20 @@
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+export const fetchWeather = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/weather`);
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    const errorMessage =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    return {error: errorMessage ? errorMessage : 'Something went wrong.'};
+  }
+};
+
 export const fetchMembershipTypes = async () => {
   try {
     const response = await fetch(`${BASE_URL}/membership-purchase/types`);
