@@ -6,15 +6,16 @@ const WeatherWidget = ({weather, setShowWeather}) => {
       <div className='bg-gray-900 w-[95%] sm:w-[85%] max-w-md rounded-xl p-4 max-h-[90vh] flex flex-col justify-between'>
         <button
           onClick={() => setShowWeather(false)}
-          className='text-sm mb-4 underline font-semibold self-center'
+          // className='text-sm mb-4 underline font-semibold self-center'
+          className='text-xs mb-3 underline font-semibold self-center text-[hsl(12,88%,59%)]'
           style={{color: 'hsl(12, 88%, 59%)'}}
         >
           Close Weather
         </button>
-        <p className='text-xs text-gray-400 text-center mb-4'>
+        <p className='text-[0.65rem] text-gray-400 text-center mb-3'>
           Last reading: {weather.timestampPST}
         </p>
-        <div className='grid grid-cols-1 gap-3 text-white text-sm'>
+        <div className='grid grid-cols-1 gap-2 text-white text-[0.8rem]'>
           <div className='bg-gray-800 rounded-xl p-3'>
             <h4 className='text-base font-semibold mb-1'>Outdoor</h4>
             <p className='text-3xl font-bold'>{weather.tempf}&deg;F</p>
