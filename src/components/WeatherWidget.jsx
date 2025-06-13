@@ -6,7 +6,6 @@ const WeatherWidget = ({weather, setShowWeather}) => {
       <div className='bg-gray-900 w-[95%] sm:w-[85%] max-w-md rounded-xl p-4 max-h-[90vh] flex flex-col justify-between'>
         <button
           onClick={() => setShowWeather(false)}
-          // className='text-sm mb-4 underline font-semibold self-center'
           className='text-xs mb-3 underline font-semibold self-center text-[hsl(12,88%,59%)]'
           style={{color: 'hsl(12, 88%, 59%)'}}
         >
