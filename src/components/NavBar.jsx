@@ -103,7 +103,7 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
           id="menu"
           className={
             isHamburgerOpen
-              ? "absolute flex flex-col items-center rounded py-4 mt-4  space-y-3 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-md"
+              ? "absolute flex flex-col items-center rounded py-4 mt-4 z-50 space-y-3 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-md"
               : "hidden"
           }
           role="menu"
