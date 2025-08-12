@@ -193,10 +193,10 @@ const MembershipItem = () => {
         </label>
         <form onSubmit={handleSubmit}>
           <p>
-            {full_name &&
+            {full_name ? 
               `${capitalizeWord(full_name)} - ${getMembershipType(
                 updatedInfo
-              )}  `}{' '}
+              )}  ` : ''}{' '}
           </p>
           <p className='mb-4'>{`Purchased on: ${dateToString(created_on)}`}</p>
           <div className='grid gap-2 mb-2 md:grid-cols-3'>
