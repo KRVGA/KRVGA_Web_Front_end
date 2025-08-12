@@ -196,7 +196,7 @@ const MembershipItem = () => {
             {full_name ? 
               `${capitalizeWord(full_name)} - ${getMembershipType(
                 updatedInfo
-              )}  ` : ''}{' '}
+              )}  ` : 'N/A'}{' '}
           </p>
           <p className='mb-4'>{`Purchased on: ${dateToString(created_on)}`}</p>
           <div className='grid gap-2 mb-2 md:grid-cols-3'>
