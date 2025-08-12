@@ -22,39 +22,39 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
   };
 
   return (
-    <nav className='relative container mx-auto p-6'>
-      <section className='flex items-center justify-between'>
-        <div className='pt-2'>
+    <nav className="relative container mx-auto p-6">
+      <section className="flex items-center justify-between">
+        <div className="pt-2">
           <img
-            className='h-14 w-14'
+            className="h-14 w-14"
             src={IMAGES.logoAlt}
-            alt='Logo'
+            alt="Logo"
           />
         </div>
-        <section className='hidden md:flex space-x-8'>
+        <section className="hidden md:flex space-x-8">
           <Link
-            className='hover:text-darkGrayishBlue hover:underline'
-            to='/'
+            className="hover:text-darkGrayishBlue hover:underline"
+            to="/"
           >
             Home
           </Link>
           <Link
-            className='hover:text-darkGrayishBlue hover:underline'
-            to='/calendar'
+            className="hover:text-darkGrayishBlue hover:underline"
+            to="/calendar"
           >
             Calendar
           </Link>
           <Link
-            className='hover:text-darkGrayishBlue hover:underline'
-            to='/membership_purchase'
+            className="hover:text-darkGrayishBlue hover:underline"
+            to="/membership_purchase"
           >
             Memberships
           </Link>
           <a
-            className='hover:text-darkGrayishBlue hover:underline'
-            href='https://membership.nra.org/MultiStep/JoinToday'
-            target='_blank'
-            rel='noreferrer'
+            className="hover:text-darkGrayishBlue hover:underline"
+            href="https://membership.nra.org/MultiStep/JoinToday"
+            target="_blank"
+            rel="noreferrer"
           >
             Join NRA
           </a>
@@ -62,13 +62,13 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
           {user ? (
             <>
               <Link
-                className='hover:text-darkGrayishBlue hover:underline'
-                to='/profile'
+                className="hover:text-darkGrayishBlue hover:underline"
+                to="/profile"
               >
                 Profile
               </Link>
               <button
-                className='hover:text-darkGrayishBlue hover:underline'
+                className="hover:text-darkGrayishBlue hover:underline"
                 onClick={handleLogout}
               >
                 Log-out
@@ -77,8 +77,8 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
           ) : (
             <>
               <Link
-                className='hover:text-darkGrayishBlue hover:underline'
-                to='/login'
+                className="hover:text-darkGrayishBlue hover:underline"
+                to="/login"
               >
                 Login
               </Link>
@@ -88,54 +88,54 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
 
         <button
           onClick={handleClickHamburger}
-          id='menu-btn'
+          id="menu-btn"
           className={` ${
-            isHamburgerOpen ? 'open' : ''
+            isHamburgerOpen ? "open" : ""
           } block hamburger md:hidden focus:outline-none`}
         >
-          <span className='hamburger-top'></span>
-          <span className='hamburger-middle'></span>
-          <span className='hamburger-bottom'></span>
+          <span className="hamburger-top"></span>
+          <span className="hamburger-middle"></span>
+          <span className="hamburger-bottom"></span>
         </button>
       </section>
-
-      <div className={` ${isHamburgerOpen ? 'mb-40' : ''} md:hidden`}>
+      <div className="relative md:hidden">
         <div
-          id='menu'
+          id="menu"
           className={
             isHamburgerOpen
-              ? 'absolute flex flex-col items-center rounded self-end py-4 mt-4  space-y-3 font-bold bg-veryLightGray sm:w-auto sm:self-center left-6 right-6 drop-shadow-md'
-              : 'absolute flex-col items-center self-end rounded hidden py-4 mt-4  space-y-3 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-md'
+              ? "absolute flex flex-col items-center rounded py-4 mt-4  space-y-3 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-md"
+              : "hidden"
           }
+          role="menu"
         >
           <Link
-            className='hover:text-darkGrayishBlue underline'
-            to='/membership_purchase'
+            className="hover:text-darkGrayishBlue underline"
+            to="/membership_purchase"
           >
             Memberships
           </Link>
           <Link
-            className='hover:text-darkGrayishBlue underline'
-            to='/'
+            className="hover:text-darkGrayishBlue underline"
+            to="/"
           >
             Home
           </Link>
           <Link
-            className='hover:text-darkGrayishBlue underline'
-            to='/calendar'
+            className="hover:text-darkGrayishBlue underline"
+            to="/calendar"
           >
             Calendar
           </Link>
           {user ? (
             <>
               <Link
-                className='hover:text-darkGrayishBlue underline'
-                to='/profile'
+                className="hover:text-darkGrayishBlue underline"
+                to="/profile"
               >
                 Profile
               </Link>
               <button
-                className='hover:text-darkGrayishBlue underline'
+                className="hover:text-darkGrayishBlue underline"
                 onClick={handleLogout}
               >
                 Log-out
@@ -144,18 +144,18 @@ const NavBar = ({isHamburgerOpen, setIsHamburgerOpen}) => {
           ) : (
             <>
               <Link
-                className='hover:text-darkGrayishBlue underline'
-                to='/login'
+                className="hover:text-darkGrayishBlue underline"
+                to="/login"
               >
                 Login
               </Link>
             </>
           )}
           <a
-            className='hover:text-darkGrayishBlue underline'
-            href='https://membership.nra.org/MultiStep/JoinToday'
-            target='_blank'
-            rel='noreferrer'
+            className="hover:text-darkGrayishBlue underline"
+            href="https://membership.nra.org/MultiStep/JoinToday"
+            target="_blank"
+            rel="noreferrer"
           >
             Join NRA
           </a>
