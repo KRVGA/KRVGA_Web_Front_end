@@ -137,36 +137,72 @@ const TermsModal = (props) => {
     }));
   };
 
+  const canSubmit =
+    has_signed_release &&
+    has_signed_pledge &&
+    !!full_name?.trim() &&
+    !!customer_email?.trim() &&
+    !!mail_address?.trim() &&
+    !!city?.trim() &&
+    !!state?.trim() &&
+    !!zip_code?.trim() &&
+    (!nra_member || !!nra_member_number?.trim()) &&
+    (!is_membership_bundle ||
+      (!!spouse_full_name?.trim() && !!spouse_email?.trim()));
+
+      const isEmail = (email) =>
+        /^\S+@\S+\.\S+$/.test(String(email || "").trim());
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    if (!isEmail(customer_email)) {
+      // This catches edge cases the browser might allow
+      const el = form.querySelector("#customer_email");
+      el?.setCustomValidity("Please enter a valid email like name@example.com");
+      el?.reportValidity();
+      el?.setCustomValidity("");
+      return;
+    }
+    props.action(purchaseData);
+  };
+
   return (
     <Modal
       show={true}
       onClose={props.onClose}
     >
       <Modal.Header>Please Read and Agree</Modal.Header>
-      <Modal.Body className='modal-body'>
-        <div className='text-xs flex flex-col '>
-          <span className='italic text-center'>
+      <Modal.Body className="modal-body">
+        <div className="text-xs flex flex-col ">
+          <span className="italic text-center">
             Operating on a non-discriminatory basis with a special use permit
             from the U.S. Forest Service. Revised – 10/01/2022
           </span>
-          <h3 className=' text-center mb-4 mt-4 text-xl font-medium text-gray-900 dark:text-white'>
+          <h3 className=" text-center mb-4 mt-4 text-xl font-medium text-gray-900 dark:text-white">
             RELEASE AND INDEMNIFICATION AGREEMENT
           </h3>
         </div>
-        <div className='space-y-4 p-2'>
-          <p className='text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
+        <div className="space-y-4 p-2">
+          <p className="text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400">
             IN CONSIDERATION of {pronoun} being given permission to observe
             and/or participate in the shooting, sporting and outdoor activities
             at the Kern River Valley Gun Association, {pronoun} agree to sign
             and enter into this release and indemnification agreement.
           </p>
-          <p className='text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
-            {pronoun} {pronoun === 'We' ? 'are' : 'am'} entering into this
+          <p className="text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400">
+            {pronoun} {pronoun === "We" ? "are" : "am"} entering into this
             agreement freely, voluntarily, and specifically state that:
           </p>
-          <ol className='text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
+          <ol className="text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400">
             <li>
-              1. {pronoun} {pronoun === 'We' ? 'are' : 'am'} not dazed,
+              1. {pronoun} {pronoun === "We" ? "are" : "am"} not dazed,
               suffering from shock or under the influence of drugs or alcohol;
             </li>
             <li>
@@ -178,42 +214,42 @@ const TermsModal = (props) => {
               signature and agreement to this document.
             </li>
           </ol>
-          <p className='text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
+          <p className="text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400">
             {pronoun} will comply with all rules and regulations. If {pronoun}
             have questions or observe any unusual or unnecessary hazard during
             my participation, {pronoun} will immediately bring such to the
             attention of the nearest official, and {pronoun} have read all range
             rules and will comply with completely.
           </p>
-          <p className='text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
+          <p className="text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400">
             {pronoun} understand that the observation and/or participation in
             the shooting, sporting and outdoor activities will expose me to
             certain risks inherent to the use of firearms and related
             activities. These include, but are not limited to, personal or
             bodily injury, death and/or property damage.
           </p>
-          <p className='text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
+          <p className="text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400">
             {pronoun} understand the range is under audio and visual
             surveillance and agree to be recorded while at the range.
           </p>
-          <p className='text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
+          <p className="text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400">
             {pronoun} agree to assume and accept the dangers inherent in the
             observation and/or participation of the shooting, sporting and
             outdoor activities.
           </p>
-          <p className='text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
+          <p className="text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400">
             {pronoun} represent that {pronoun} have no drug, health or mental
             problem that could or will interfere with observations and/or
             participation of the shooting, sporting and outdoor activities.
           </p>
-          <p className='text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
-            {pronoun} agree that {pronoun} {pronoun === 'We' ? 'are' : 'am'}{' '}
+          <p className="text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400">
+            {pronoun} agree that {pronoun} {pronoun === "We" ? "are" : "am"}{" "}
             responsible for my own safety and the safety of any guest or child
             that {pronoun} may bring to the premises of the Kern River Valley
             Gun Association.
           </p>
 
-          <p className='text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
+          <p className="text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400">
             {pronoun} agree that the Kern River Valley Gun Association, its
             members, officers, directors, employees, agents, representatives,
             affiliates, subsidiaries, successors or assignees and all
@@ -224,7 +260,7 @@ const TermsModal = (props) => {
             result of ordinary negligence.
           </p>
 
-          <p className='text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400'>
+          <p className="text-base text-justify leading-relaxed text-gray-500 dark:text-gray-400">
             {pronoun} further agree that in the event that the Kern River Valley
             Gun Association, its members, officers, directors, employees,
             agents, representatives, affiliates, subsidiaries, successors or
@@ -244,233 +280,250 @@ const TermsModal = (props) => {
             said claim, if any be brought.
           </p>
 
-          <form>
-            <div className='flex flex-col justify-center px-4 pt-4 mb-2 border border-gray-200 rounded dark:border-gray-700'>
-              <div className='grid md:grid-cols-2 md:gap-6'>
-                <div className='relative z-0 w-full mb-6 group'>
+          <form
+            id="purchase-form"
+            onSubmit={handleSubmit}
+          >
+            <div className="flex flex-col justify-center px-4 pt-4 mb-2 border border-gray-200 rounded dark:border-gray-700">
+              <div className="grid md:grid-cols-2 md:gap-6">
+                <div className="relative z-0 w-full mb-6 group">
                   <input
-                    type='text'
-                    name='full_name'
-                    id='full_name'
+                    type="text"
+                    name="full_name"
+                    id="full_name"
                     value={full_name}
-                    className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     onChange={onChange}
-                    placeholder=' '
+                    placeholder=" "
                     required
                   />
                   <label
-                    htmlFor='full_name'
-                    className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                    htmlFor="full_name"
+                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                   >
                     Member Full Name
                   </label>
                 </div>
-                <div className='relative z-0 w-full mb-6 group'>
+                <div className="relative z-0 w-full mb-6 group">
                   <input
-                    type='email'
-                    name='customer_email'
-                    id='customer_email'
+                    type="email"
+                    name="customer_email"
+                    id="customer_email"
                     value={customer_email}
-                    className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     onChange={onChange}
-                    placeholder=' '
+                    placeholder=" "
                     required
+                    pattern="^\S+@\S+\.\S+$"
+                    onInvalid={(e) =>
+                      e.currentTarget.setCustomValidity(
+                        "Please enter a valid email like name@example.com"
+                      )
+                    }
+                    onInput={(e) => e.currentTarget.setCustomValidity("")}
                   />
                   <label
-                    htmlFor='customer_email'
-                    className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                    htmlFor="customer_email"
+                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                   >
                     Member Email
                   </label>
                 </div>
               </div>
-              <div className='grid md:grid-cols-3 md:gap-6'>
-                <div className='relative z-0 w-full mb-6 group'>
+              <div className="grid md:grid-cols-3 md:gap-6">
+                <div className="relative z-0 w-full mb-6 group">
                   <input
-                    type='text'
-                    name='mail_address'
-                    id='mail_address'
+                    type="text"
+                    name="mail_address"
+                    id="mail_address"
                     value={mail_address}
                     onChange={onChange}
-                    className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-                    placeholder=' '
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    placeholder=" "
                     required
                   />
                   <label
-                    htmlFor='mail_address'
-                    className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                    htmlFor="mail_address"
+                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                   >
                     Mailing Address
                   </label>
                 </div>
-                <div className='relative z-0 w-full mb-6 group'>
+                <div className="relative z-0 w-full mb-6 group">
                   <input
-                    type='text'
-                    name='city'
-                    id='city'
+                    type="text"
+                    name="city"
+                    id="city"
                     value={city}
                     onChange={onChange}
-                    className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-                    placeholder=' '
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    placeholder=" "
                     required
                   />
                   <label
-                    htmlFor='city'
-                    className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                    htmlFor="city"
+                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                   >
                     City
                   </label>
                 </div>
-                <div className='relative z-0 w-full mb-6 group'>
-                  <span className='absolute start-0 bottom-3 text-gray-500 dark:text-gray-400'>
+                <div className="relative z-0 w-full mb-6 group">
+                  <span className="absolute start-0 bottom-3 text-gray-500 dark:text-gray-400">
                     <svg
-                      className='w-4 h-4 rtl:rotate-[270deg]'
-                      aria-hidden='true'
-                      xmlns='http://www.w3.org/2000/svg'
-                      fill='currentColor'
-                      viewBox='0 0 19 18'
+                      className="w-4 h-4 rtl:rotate-[270deg]"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 19 18"
                     >
-                      <path d='M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z' />
+                      <path d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z" />
                     </svg>
                   </span>
                   <input
-                    type='tel'
-                    name='phone_number'
-                    id='phone_number'
-                    value={phone_number ? phone_number : ''}
+                    type="tel"
+                    name="phone_number"
+                    id="phone_number"
+                    value={phone_number ? phone_number : ""}
                     onChange={onChange}
-                    className='block py-2.5 ps-6 pe-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-                    pattern='\(\d{3}\) \d{3}-\d{4}'
-                    autoComplete='off'
+                    className="block py-2.5 ps-6 pe-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    pattern="\(\d{3}\) \d{3}-\d{4}"
+                    autoComplete="off"
                   />
                   <label
-                    htmlFor='phone_number'
-                    className='absolute text-xs text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:start-6 peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto'
+                    htmlFor="phone_number"
+                    className="absolute text-xs text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:start-6 peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
                   >
                     Phone Number
                   </label>
                 </div>
               </div>
 
-              <div className='grid md:grid-cols-2 md:gap-6'>
-                <div className='relative z-0 w-full mb-6 group'>
+              <div className="grid md:grid-cols-2 md:gap-6">
+                <div className="relative z-0 w-full mb-6 group">
                   <input
-                    type='text'
-                    name='state'
-                    id='state'
+                    type="text"
+                    name="state"
+                    id="state"
                     value={state}
                     onChange={onChange}
-                    className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-                    placeholder=' '
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    placeholder=" "
                     required
                   />
                   <label
-                    htmlFor='state'
-                    className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                    htmlFor="state"
+                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                   >
                     State
                   </label>
                 </div>
-                <div className='relative z-0 w-full mb-6 group'>
+                <div className="relative z-0 w-full mb-6 group">
                   <input
-                    type='text'
-                    name='zip_code'
-                    id='zip_code'
+                    type="text"
+                    name="zip_code"
+                    id="zip_code"
                     value={zip_code}
                     onChange={onChange}
-                    className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-                    placeholder=' '
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    placeholder=" "
                     required
                   />
                   <label
-                    htmlFor='zip_code'
-                    className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                    htmlFor="zip_code"
+                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                   >
                     Zip Code
                   </label>
                 </div>
               </div>
-              {props.membership_type.name === 'bundle' && (
+              {props.membership_type.name === "bundle" && (
                 <>
-                  <div className='grid md:grid-cols-3 md:gap-6'>
-                    <div className='relative z-0 w-full mb-6 group'>
+                  <div className="grid md:grid-cols-3 md:gap-6">
+                    <div className="relative z-0 w-full mb-6 group">
                       <input
-                        type='text'
-                        name='spouse_full_name'
-                        id='spouse_full_name'
+                        type="text"
+                        name="spouse_full_name"
+                        id="spouse_full_name"
                         value={spouse_full_name}
-                        className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         onChange={onChange}
-                        placeholder=' '
+                        placeholder=" "
                         required
                       />
                       <label
-                        htmlFor='full_name'
-                        className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                        htmlFor="full_name"
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                       >
                         Spouse Full Name
                       </label>
                     </div>
-                    <div className='relative z-0 w-full mb-6 group'>
+                    <div className="relative z-0 w-full mb-6 group">
                       <input
-                        type='email'
-                        name='spouse_email'
-                        id='spouse_email'
+                        type="email"
+                        name="spouse_email"
+                        id="spouse_email"
                         value={spouse_email}
-                        className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         onChange={onChange}
-                        placeholder=' '
+                        placeholder=" "
                         required
+                        pattern="^\S+@\S+\.\S+$"
+                        onInvalid={(e) =>
+                          e.currentTarget.setCustomValidity(
+                            "Please enter a valid email like name@example.com"
+                          )
+                        }
+                        onInput={(e) => e.currentTarget.setCustomValidity("")}
                       />
                       <label
-                        htmlFor='customer_email'
-                        className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                        htmlFor="customer_email"
+                        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                       >
                         Spouse Email
                       </label>
                     </div>
-                    <div className='relative z-0 w-full mb-6 group'>
-                      <span className='absolute start-0 bottom-3 text-gray-500 dark:text-gray-400'>
+                    <div className="relative z-0 w-full mb-6 group">
+                      <span className="absolute start-0 bottom-3 text-gray-500 dark:text-gray-400">
                         <svg
-                          className='w-4 h-4 rtl:rotate-[270deg]'
-                          aria-hidden='true'
-                          xmlns='http://www.w3.org/2000/svg'
-                          fill='currentColor'
-                          viewBox='0 0 19 18'
+                          className="w-4 h-4 rtl:rotate-[270deg]"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 19 18"
                         >
-                          <path d='M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z' />
+                          <path d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z" />
                         </svg>
                       </span>
                       <input
-                        type='tel'
-                        name='spouse_phone_number'
-                        id='spouse_phone_number'
-                        value={spouse_phone_number ? spouse_phone_number : ''}
+                        type="tel"
+                        name="spouse_phone_number"
+                        id="spouse_phone_number"
+                        value={spouse_phone_number ? spouse_phone_number : ""}
                         onChange={onChange}
-                        className='block py-2.5 ps-6 pe-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-                        pattern='\(\d{3}\) \d{3}-\d{4}'
-                        autoComplete='off'
+                        className="block py-2.5 ps-6 pe-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                        pattern="\(\d{3}\) \d{3}-\d{4}"
+                        autoComplete="off"
                       />
                       <label
-                        htmlFor='spouse_phone_number'
-                        className='absolute text-xs text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:start-6 peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto'
+                        htmlFor="spouse_phone_number"
+                        className="absolute text-xs text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:start-6 peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
                       >
                         Spouse Phone Number
                       </label>
                     </div>
                   </div>
-                  <div className='relative z-0 w-full mb-6 group'>
+                  <div className="relative z-0 w-full mb-6 group">
                     <input
-                      name='is_same_address'
-                      id='is_same_address'
-                      defaultChecked={is_same_address}
+                      name="is_same_address"
+                      id="is_same_address"
+                      checked={is_same_address}
                       onChange={onChange}
-                      type='checkbox'
-                      className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
+                      type="checkbox"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  "
                     />
                     <label
-                      htmlFor='is_same_address'
-                      className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
+                      htmlFor="is_same_address"
+                      className="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 "
                     >
                       Same Address for Both Mebers
                     </label>
@@ -478,80 +531,80 @@ const TermsModal = (props) => {
 
                   {!is_same_address && (
                     <>
-                      <div className='grid md:grid-cols-2 md:gap-6'>
-                        <div className='relative z-0 w-full mb-6 group'>
+                      <div className="grid md:grid-cols-2 md:gap-6">
+                        <div className="relative z-0 w-full mb-6 group">
                           <input
-                            type='text'
-                            name='spouse_mail_address'
-                            id='spouse_mail_address'
+                            type="text"
+                            name="spouse_mail_address"
+                            id="spouse_mail_address"
                             value={spouse_mail_address}
                             onChange={onChange}
-                            className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-                            placeholder=' '
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" "
                             required
                           />
 
                           <label
-                            htmlFor='spouse_mail_address'
-                            className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                            htmlFor="spouse_mail_address"
+                            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                           >
                             Spouse Mailing Address
                           </label>
                         </div>
-                        <div className='relative z-0 w-full mb-6 group'>
+                        <div className="relative z-0 w-full mb-6 group">
                           <input
-                            type='text'
-                            name='spouse_city'
-                            id='spouse_city'
+                            type="text"
+                            name="spouse_city"
+                            id="spouse_city"
                             value={spouse_city}
                             onChange={onChange}
-                            className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-                            placeholder=' '
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" "
                             required
                           />
                           <label
-                            htmlFor='spouse_city'
-                            className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                            htmlFor="spouse_city"
+                            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                           >
                             Spouse City
                           </label>
                         </div>
                       </div>
 
-                      <div className='grid md:grid-cols-2 md:gap-6'>
-                        <div className='relative z-0 w-full mb-6 group'>
+                      <div className="grid md:grid-cols-2 md:gap-6">
+                        <div className="relative z-0 w-full mb-6 group">
                           <input
-                            type='text'
-                            name='spouse_state'
-                            id='spouse_state'
+                            type="text"
+                            name="spouse_state"
+                            id="spouse_state"
                             value={spouse_state}
                             onChange={onChange}
-                            className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-                            placeholder=' '
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" "
                             required
                           />
 
                           <label
-                            htmlFor='spouse_state'
-                            className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                            htmlFor="spouse_state"
+                            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                           >
                             Spouse State
                           </label>
                         </div>
-                        <div className='relative z-0 w-full mb-6 group'>
+                        <div className="relative z-0 w-full mb-6 group">
                           <input
-                            type='text'
-                            name='spouse_zip_code'
-                            id='spouse_zip_code'
+                            type="text"
+                            name="spouse_zip_code"
+                            id="spouse_zip_code"
                             value={spouse_zip_code}
                             onChange={onChange}
-                            className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-                            placeholder=' '
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                            placeholder=" "
                             required
                           />
                           <label
-                            htmlFor='spouse_zip_code'
-                            className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                            htmlFor="spouse_zip_code"
+                            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                           >
                             Spouse Zip Code
                           </label>
@@ -562,51 +615,51 @@ const TermsModal = (props) => {
                 </>
               )}
             </div>
-            <div className='flex flex-col justify-center pl-4 pt-4 mb-2 border border-gray-200 rounded dark:border-gray-700'>
-              {props.membership_type.name === 'bundle' && (
-                <h3 className='text-center'>Main Annual Member</h3>
+            <div className="flex flex-col justify-center pl-4 pt-4 mb-2 border border-gray-200 rounded dark:border-gray-700">
+              {props.membership_type.name === "bundle" && (
+                <h3 className="text-center">Main Annual Member</h3>
               )}
               {
-                <div className='relative z-0 w-full mb-6 group'>
+                <div className="relative z-0 w-full mb-6 group">
                   <input
-                    name='veteran'
-                    id='veteran'
+                    name="veteran"
+                    id="veteran"
                     disabled={decline}
-                    defaultChecked={veteran}
+                    checked={veteran}
                     onChange={onChange}
-                    type='checkbox'
+                    type="checkbox"
                     className={
                       decline
-                        ? 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed'
-                        : 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
+                        ? "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed"
+                        : "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  "
                     }
                   />
                   <label
-                    htmlFor='veteran'
-                    className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
+                    htmlFor="veteran"
+                    className="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 "
                   >
                     Veteran
                   </label>
                 </div>
               }
               {veteran && (
-                <div className='relative z-0 w-full mb-6 group'>
+                <div className="relative z-0 w-full mb-6 group">
                   <input
-                    name='disabled_veteran'
-                    id='disabled_veteran'
+                    name="disabled_veteran"
+                    id="disabled_veteran"
                     disabled={decline}
-                    defaultChecked={disabled_veteran}
+                    checked={disabled_veteran}
                     onChange={onChange}
-                    type='checkbox'
+                    type="checkbox"
                     className={
                       decline
-                        ? 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed'
-                        : 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
+                        ? "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed"
+                        : "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  "
                     }
                   />
                   <label
-                    htmlFor='disabled_veteran'
-                    className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
+                    htmlFor="disabled_veteran"
+                    className="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 "
                   >
                     Disabled Veteran
                   </label>
@@ -614,124 +667,124 @@ const TermsModal = (props) => {
               )}
 
               {!veteran && !disabled_veteran && (
-                <div className='relative z-0 w-full mb-6 group'>
+                <div className="relative z-0 w-full mb-6 group">
                   <input
-                    name='decline'
-                    id='decline'
+                    name="decline"
+                    id="decline"
                     disabled={veteran || disabled_veteran}
-                    defaultChecked={decline}
+                    checked={decline}
                     onChange={onChange}
-                    type='checkbox'
+                    type="checkbox"
                     className={
                       veteran || disabled_veteran
-                        ? 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed'
-                        : 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
+                        ? "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed"
+                        : "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  "
                     }
                   />
                   <label
-                    htmlFor='decline'
-                    className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
+                    htmlFor="decline"
+                    className="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 "
                   >
                     Decline to state
                   </label>
                 </div>
               )}
 
-              <div className='relative z-0 w-full mb-6 group'>
+              <div className="relative z-0 w-full mb-6 group">
                 <input
-                  name='crpa_member'
-                  id='crpa_member'
-                  defaultChecked={crpa_member}
+                  name="crpa_member"
+                  id="crpa_member"
+                  checked={crpa_member}
                   onChange={onChange}
-                  type='checkbox'
-                  className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
+                  type="checkbox"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  "
                 />
                 <label
-                  htmlFor='crpa_member'
-                  className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
+                  htmlFor="crpa_member"
+                  className="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 "
                 >
                   California Rifle and Pistol Association (CRPA) Member
                 </label>
               </div>
-              <div className='relative z-0 w-full mb-6 group'>
+              <div className="relative z-0 w-full mb-6 group">
                 <input
-                  name='nra_member'
-                  id='nra_member'
-                  defaultChecked={nra_member}
+                  name="nra_member"
+                  id="nra_member"
+                  checked={nra_member}
                   onChange={onChange}
-                  type='checkbox'
-                  className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
+                  type="checkbox"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  "
                 />
                 <label
-                  htmlFor='nra_member'
-                  className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
+                  htmlFor="nra_member"
+                  className="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 "
                 >
                   The National Riffle Association (NRA) Member
                 </label>
                 {nra_member && (
                   <div>
                     <label
-                      htmlFor='nra_member_number'
-                      className='block mb-2 text-sm font-medium  dark:text-white  text-gray-600'
+                      htmlFor="nra_member_number"
+                      className="block mb-2 text-sm font-medium  dark:text-white  text-gray-600"
                     >
                       NRA Membership #
                     </label>
                     <input
-                      type='text'
-                      id='nra_member_number'
-                      name='nra_member_number'
+                      type="text"
+                      id="nra_member_number"
+                      name="nra_member_number"
                       value={nra_member_number}
                       onChange={onChange}
-                      className='block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                      className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                   </div>
                 )}
               </div>
             </div>
-            {props.membership_type.name === 'bundle' && (
-              <div className='flex flex-col justify-center pl-4 pt-4 border border-gray-200 rounded dark:border-gray-700'>
-                <h3 className='text-center'>Spouse Member</h3>
+            {props.membership_type.name === "bundle" && (
+              <div className="flex flex-col justify-center pl-4 pt-4 border border-gray-200 rounded dark:border-gray-700">
+                <h3 className="text-center">Spouse Member</h3>
                 {
-                  <div className='relative z-0 w-full mb-6 group'>
+                  <div className="relative z-0 w-full mb-6 group">
                     <input
-                      name='spouse_veteran'
-                      id='spouse_veteran'
+                      name="spouse_veteran"
+                      id="spouse_veteran"
                       disabled={spouse_decline}
-                      defaultChecked={spouse_veteran}
+                      checked={spouse_veteran}
                       onChange={onChange}
-                      type='checkbox'
+                      type="checkbox"
                       className={
                         spouse_decline
-                          ? 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed'
-                          : 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
+                          ? "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed"
+                          : "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  "
                       }
                     />
                     <label
-                      htmlFor='spouse_veteran'
-                      className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
+                      htmlFor="spouse_veteran"
+                      className="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 "
                     >
                       Spouse Veteran
                     </label>
                   </div>
                 }
                 {spouse_veteran && (
-                  <div className='relative z-0 w-full mb-6 group'>
+                  <div className="relative z-0 w-full mb-6 group">
                     <input
-                      name='spouse_disabled_veteran'
-                      id='spouse_disabled_veteran'
+                      name="spouse_disabled_veteran"
+                      id="spouse_disabled_veteran"
                       disabled={spouse_decline}
-                      defaultChecked={spouse_disabled_veteran}
+                      checked={spouse_disabled_veteran}
                       onChange={onChange}
-                      type='checkbox'
+                      type="checkbox"
                       className={
                         spouse_decline
-                          ? 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed'
-                          : 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
+                          ? "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed"
+                          : "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  "
                       }
                     />
                     <label
-                      htmlFor='spouse_disabled_veteran'
-                      className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
+                      htmlFor="spouse_disabled_veteran"
+                      className="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 "
                     >
                       Disabled Veteran
                     </label>
@@ -739,86 +792,86 @@ const TermsModal = (props) => {
                 )}
 
                 {!spouse_veteran && !spouse_disabled_veteran && (
-                  <div className='relative z-0 w-full mb-6 group'>
+                  <div className="relative z-0 w-full mb-6 group">
                     <input
-                      name='spouse_decline'
-                      id='spouse_decline'
+                      name="spouse_decline"
+                      id="spouse_decline"
                       disabled={spouse_veteran || spouse_disabled_veteran}
-                      defaultChecked={spouse_decline}
+                      checked={spouse_decline}
                       onChange={onChange}
-                      type='checkbox'
+                      type="checkbox"
                       className={
                         spouse_veteran || spouse_disabled_veteran
-                          ? 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed'
-                          : 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
+                          ? "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  cursor-not-allowed"
+                          : "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  "
                       }
                     />
                     <label
-                      htmlFor='spouse_decline'
-                      className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
+                      htmlFor="spouse_decline"
+                      className="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 "
                     >
                       Decline to state
                     </label>
                   </div>
                 )}
-                <div className='relative z-0 w-full mb-6 group'>
+                <div className="relative z-0 w-full mb-6 group">
                   <input
-                    name='spouse_crpa_member'
-                    id='spouse_crpa_member'
-                    defaultChecked={spouse_crpa_member}
+                    name="spouse_crpa_member"
+                    id="spouse_crpa_member"
+                    checked={spouse_crpa_member}
                     onChange={onChange}
-                    type='checkbox'
-                    className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
+                    type="checkbox"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  "
                   />
                   <label
-                    htmlFor='spouse_crpa_member'
-                    className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
+                    htmlFor="spouse_crpa_member"
+                    className="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 "
                   >
                     California Rifle and Pistol Association (CRPA) Member
                   </label>
                 </div>
-                <div className='relative z-0 w-full mb-6 group'>
+                <div className="relative z-0 w-full mb-6 group">
                   <input
-                    name='spouse_nra_member'
-                    id='spouse_nra_member'
-                    defaultChecked={spouse_nra_member}
+                    name="spouse_nra_member"
+                    id="spouse_nra_member"
+                    checked={spouse_nra_member}
                     onChange={onChange}
-                    type='checkbox'
-                    className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  '
+                    type="checkbox"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600  "
                   />
                   <label
-                    htmlFor='spouse_nra_member'
-                    className='ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 '
+                    htmlFor="spouse_nra_member"
+                    className="ml-2 text-sm font-medium text-gray-600 dark:text-gray-300 "
                   >
                     The National Riffle Association (NRA) Member
                   </label>
                   {spouse_nra_member && (
                     <div>
                       <label
-                        htmlFor='spouse_nra_member_number'
-                        className='block mb-2 text-sm font-medium  dark:text-white  text-gray-600 '
+                        htmlFor="spouse_nra_member_number"
+                        className="block mb-2 text-sm font-medium  dark:text-white  text-gray-600 "
                       >
                         NRA Membership #
                       </label>
                       <input
-                        type='text'
-                        id='spouse_nra_member_number'
-                        name='spouse_nra_member_number'
+                        type="text"
+                        id="spouse_nra_member_number"
+                        name="spouse_nra_member_number"
                         value={spouse_nra_member_number}
                         onChange={onChange}
-                        className='block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                        className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                     </div>
                   )}
                 </div>
               </div>
             )}
-            <div className=''>
-              <p className='text-base text-justify mt-4 leading-relaxed text-gray-500 dark:text-gray-400'>
-                <span className='text-gray-900'>Pledge:</span> {pronoun} certify
-                that {pronoun} {pronoun === 'We' ? 'are' : 'am'} legally
+            <div className="">
+              <p className="text-base text-justify mt-4 leading-relaxed text-gray-500 dark:text-gray-400">
+                <span className="text-gray-900">Pledge:</span> {pronoun} certify
+                that {pronoun} {pronoun === "We" ? "are" : "am"} legally
                 entitled to own and use a firearm in compliance with the laws of
-                the United States of America and the State of California; that{' '}
+                the United States of America and the State of California; that{" "}
                 {pronoun}
                 am not a member of any organization which has any part of its
                 program that attempts to overthrow the government by force or
@@ -828,114 +881,92 @@ const TermsModal = (props) => {
                 government, or country; that {pronoun} have never been convicted
                 of an offense, including certain Prohibiting Misdemeanors, or
                 have an outstanding warrant for, as listed in the California
-                Penal Code that prohibit owning and/or possessing firearms; that{' '}
-                {pronoun} {pronoun === 'We' ? 'are' : 'am'} not an alcoholic or
+                Penal Code that prohibit owning and/or possessing firearms; that{" "}
+                {pronoun} {pronoun === "We" ? "are" : "am"} not an alcoholic or
                 illicit drug user; and that, if I am admitted to membership,
                 will fulfill the obligation of good sportsmanship and good
                 citizenship, and obey all club rules.
               </p>
             </div>
-            <div className='flex  items-center my-4'>
+            <div className="flex  items-center my-4">
               <input
-                name='has_signed_pledge'
-                id='has_signed_pledge'
-                defaultChecked={has_signed_pledge}
+                name="has_signed_pledge"
+                id="has_signed_pledge"
+                checked={has_signed_pledge}
                 onChange={onChange}
-                type='checkbox'
-                className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type="checkbox"
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
               <label
-                htmlFor='has_signed_pledge'
-                className='ml-2 text-sm font-medium text-justify text-gray-900 dark:text-gray-300'
+                htmlFor="has_signed_pledge"
+                className="ml-2 text-sm font-medium text-justify text-gray-900 dark:text-gray-300"
               >
                 BY CHECKING THIS BOX YOU E-SIGN THE PLEDGE ABOVE
               </label>
             </div>
-            <div className='flex items-center mb-4'>
+            <div className="flex items-center mb-4">
               <input
-                name='has_signed_release'
-                id='has_signed_release'
-                defaultChecked={has_signed_release}
+                name="has_signed_release"
+                id="has_signed_release"
+                checked={has_signed_release}
                 onChange={onChange}
-                type='checkbox'
-                className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type="checkbox"
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               ></input>
               <label
-                htmlFor='has_signed_release'
-                className='ml-2 text-sm font-medium text-justify text-gray-900 dark:text-gray-300'
+                htmlFor="has_signed_release"
+                className="ml-2 text-sm font-medium text-justify text-gray-900 dark:text-gray-300"
               >
                 {pronoun.toUpperCase()} HAVE READ THE FORGOING RELEASE AND
                 INDEMNIFICATION AGREEMENT, AND BY CHECKING THE BOX. REPRESENT
-                AND WARRANT THAT {pronoun.toUpperCase()} FULLY UNDERSTAND IT.{' '}
+                AND WARRANT THAT {pronoun.toUpperCase()} FULLY UNDERSTAND IT.{" "}
                 <b>CAUTION! READ BEFORE SIGNING.</b>
               </label>
             </div>
           </form>
         </div>
       </Modal.Body>
-      <Modal.Footer className='justify-center'>
+      <Modal.Footer className="justify-center">
         {isError && props.showAlert ? (
           <div
-            className=' bg-red-100 justify-center border border-red-400 text-red-700 px-6 py-3 rounded relative'
-            role='alert'
+            className=" bg-red-100 justify-center border border-red-400 text-red-700 px-6 py-3 rounded relative"
+            role="alert"
           >
-            <p className='block sm:inline'>{`${message}`}</p>
-            <div className='absolute top-0 bottom-0 right-0  ml-4 py-3'>
+            <p className="block sm:inline">{`${message}`}</p>
+            <div className="absolute top-0 bottom-0 right-0  ml-4 py-3">
               <svg
                 onClick={handleClick}
-                className='fill-current h-6 w-6 text-red-500'
-                role='button'
-                xmlns='http://www.w3.org/2000/svg'
-                viewBox='0 0 20 20'
+                className="fill-current h-6 w-6 text-red-500"
+                role="button"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
               >
                 <title>Close</title>
-                <path d='M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z' />
+                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
               </svg>
             </div>
           </div>
         ) : (
-          <div className=' flex gap-6'>
+          <div className=" flex gap-6">
             {isLoading ? (
               <Spinner />
             ) : (
               <>
                 <button
-                  disabled={
-                    !has_signed_release ||
-                    !full_name ||
-                    !customer_email ||
-                    !mail_address ||
-                    !city ||
-                    !state ||
-                    !zip_code ||
-                    !has_signed_pledge ||
-                    (nra_member && !nra_member_number) ||
-                    (is_membership_bundle &&
-                      (!spouse_full_name || !spouse_email))
-                  }
+                  form="purchase-form"
+                  type="submit"
+                  disabled={!canSubmit}
                   className={
-                    !has_signed_release ||
-                    !full_name ||
-                    !customer_email ||
-                    !mail_address ||
-                    !city ||
-                    !state ||
-                    !zip_code ||
-                    !has_signed_pledge ||
-                    (nra_member && !nra_member_number) ||
-                    (is_membership_bundle &&
-                      (!spouse_full_name || !spouse_email))
-                      ? 'inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg opacity-25 cursor-not-allowed'
-                      : 'inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
+                    canSubmit
+                      ? "inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200"
+                      : "inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg opacity-25 cursor-not-allowed"
                   }
-                  onClick={() => {
-                    props.action(purchaseData);
-                  }}
                 >
                   Proceed
                 </button>
+
                 <button
-                  className='inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200'
+                  className="inline-block px-5 py-2 my-1 text-center border border-brightRedLight rounded-lg hover:bg-brightRed hover:border-brightRed duration-200"
                   onClick={props.onClose}
                 >
                   Back

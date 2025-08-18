@@ -34,19 +34,20 @@ export const fetchMembershipTypes = async () => {
 export const requestPurchaseMembership = async (purchaseData) => {
   try {
     const response = await fetch(`${BASE_URL}/stripe/checkout-session`, {
-      method: 'POST',
-      headers: {'Content-type': 'application/json'},
+      method: "POST",
+      headers: {"Content-type": "application/json"},
       body: JSON.stringify(purchaseData),
     });
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    const errorMessage =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-
-    return {error: errorMessage ? errorMessage : 'Something went wrong.'};
+    const json = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      return {
+        success: false,
+        message: json.message || json.error || "Request failed",
+      };
+    }
+    return json; 
+  } catch (e) {
+    return {success: false, message: e.message || "Network error"};
   }
 };
 

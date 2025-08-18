@@ -16,27 +16,44 @@ const MembershipCard = ({membership_type, setMembershipSelected}) => {
   const showTermsConfirm = useCallback(() => {
     setOpenModal({
       async action(purchaseData) {
-        if (purchaseData.is_membership_bundle && purchaseData.is_same_address) {
-          purchaseData.spouse_mail_address = purchaseData.mail_address;
-          purchaseData.spouse_city = purchaseData.city;
-          purchaseData.spouse_state = purchaseData.state;
-          purchaseData.spouse_zip_code = purchaseData.zip_code;
-        }
-        dispatch({type: 'LOADING'});
-        const result = await requestPurchaseMembership(purchaseData);
+        try {
+          if (
+            purchaseData.is_membership_bundle &&
+            purchaseData.is_same_address
+          ) {
+            purchaseData.spouse_mail_address = purchaseData.mail_address;
+            purchaseData.spouse_city = purchaseData.city;
+            purchaseData.spouse_state = purchaseData.state;
+            purchaseData.spouse_zip_code = purchaseData.zip_code;
+          }
+          dispatch({type: "LOADING"});
+          const result = await requestPurchaseMembership(purchaseData);
 
-        if (result?.success) {
-          setOpenModal(null);
-          dispatch({type: 'RESET'});
-          setShowAlert(false);
+          if (result?.success) {
+            setOpenModal(null);
+            dispatch({type: "RESET"});
+            setShowAlert(false);
 
-          window.location.replace(`${result.url}`);
-        } else {
-          dispatch({
-            type: 'ERROR',
-            payload: 'Something Went Wrong, Try Again.',
-          });
-          setShowAlert(true);
+            window.location.replace(`${result.url}`);
+          } 
+            dispatch({
+              type: "ERROR",
+              payload:
+                result?.message ||
+                result?.error ||
+                "Something Went Wrong, Try Again.",
+            });
+            setShowAlert(true);
+          
+        } catch (err) {
+          // Network or thrown errors from the action
+          const serverMsg =
+            err?.response?.data?.message ||
+            err?.response?.data?.error ||
+            err?.message ||
+            "Something went wrong. Please try again.";
+          dispatch({type: "ERROR", payload: serverMsg});
+          setShowAlert(true); // modal stays open
         }
       },
       onClose() {
