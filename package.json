@@ -9,6 +9,9 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "engines": {
+    "node": ">=22 <23"
+  },
   "dependencies": {
     "flowbite": "^1.8.1",
     "flowbite-react": "^0.6.4",
