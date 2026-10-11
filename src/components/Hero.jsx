@@ -43,6 +43,20 @@ const Hero = () => {
             setShowWeather={setShowWeather}
           />
         )}
+        <div className='mt-6 mb-4 rounded border border-red-300 bg-red-50 px-4 py-3 text-red-900 shadow-sm'>
+          <p className='text-base font-extrabold'>
+            Notice posted October 9, 2026: Due to a recent fire, the Gun Range
+            is CLOSED until further notice.
+          </p>
+          <a
+            className='mt-2 inline-block text-sm font-bold text-red-800 underline underline-offset-2 hover:text-red-950'
+            href='https://www.fire.ca.gov/incidents/2026/10/9/cyrus-fire#newsUpdates'
+            target='_blank'
+            rel='noreferrer'
+          >
+            More info from CAL FIRE
+          </a>
+        </div>
         <section>
           <div className='py-4 mb-2 mx-auto max-w-screen-xl text-center '>
             <h5 className='mb-2 text-4xl font-extrabold tracking-tight leading-none text-gray-900 '>
