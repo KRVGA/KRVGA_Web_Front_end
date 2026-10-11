@@ -45,7 +45,7 @@ const Hero = () => {
         )}
         <div className='mt-6 mb-4 rounded border border-red-300 bg-red-50 px-4 py-3 text-red-900 shadow-sm'>
           <p className='text-base font-extrabold'>
-            Notice posted October 9, 2026: Due to a recent fire, the Gun Range
+            Notice posted October 10, 2026: Due to a recent fire, the Gun Range
             is CLOSED until further notice.
           </p>
           <a
